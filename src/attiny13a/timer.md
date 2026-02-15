@@ -4,7 +4,7 @@
 
 ## Прерывания
 
-См. раздел 9.1 *Interrupt Vectors* [ATtiny13A].
+См. раздел 9.1 *Interrupt Vectors* [ATtiny13A](#ref-attiny13a).
 
 | Vector No. | Program Address | Source        | Interrupt Definition           |
 |------------|-----------------|---------------|--------------------------------|
@@ -14,7 +14,7 @@
 
 ## Пины с функциями таймера
 
-См. раздел 10.3.1 *Alternate Functions of Port B* [ATtiny13A].
+См. раздел 10.3.1 *Alternate Functions of Port B* [ATtiny13A](#ref-attiny13a).
 
 | Port Pin | Alternate Function                          |
 |----------|----------------------------------------------|
@@ -24,5 +24,6 @@
 
 ## References
 
-- **[ATtiny13A]** ATtiny13A Datasheet, Microchip Technology, Rev. 8126F–AVR–05/12
-
+- **[ATtiny13A]** {#ref-attiny13a}  
+  ATtiny13A Datasheet, Microchip Technology, Rev. 8126F–AVR–05/12
+  
