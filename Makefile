@@ -1,18 +1,18 @@
 # Find markdown files
 SRC_MD := $(shell find src -type f -name "*.md")
 
-# Map to weblog
-OUT_HTML := $(patsubst src/%.md,weblog/%.html,$(SRC_MD))
+# Map to docs
+OUT_HTML := $(patsubst src/%.md,docs/%.html,$(SRC_MD))
 
 CSS := /style.css
 
 all: $(OUT_HTML)
 
-weblog/%.html: src/%.md
+docs/%.html: src/%.md
 	@mkdir -p $(dir $@)
 	pandoc $< -o $@ -s --css=$(CSS)
 
 clean:
-	rm -rf weblog/*.html weblog/*/
+	rm -rf docs
 
 .PHONY: all clean

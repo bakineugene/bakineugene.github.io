@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>timer</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<h1 id="attiny13a-timercounter">ATtiny13A Timer/Counter</h1>
+<p>Единственный 8-битный счётчик.</p>
+<p>См. раздел 11. <em>8-bit Timer/Counter0 with PWM</em> [<a
+href="#ref-attiny13a">ATtiny13A Datasheet</a>].</p>
+<p>Может тактироваться от того же источника, что и <code>CPU</code>
+(через prescaler) либо от внешнего источника с пина
+<code>T0 (PB2)</code></p>
+<h2 id="прерывания">Прерывания</h2>
+<p>См. раздел 9.1 <em>Interrupt Vectors</em> [<a
+href="#ref-attiny13a">ATtiny13A Datasheet</a>].</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 22%" />
+<col style="width: 19%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Vector No.</th>
+<th>Program Address</th>
+<th>Source</th>
+<th>Interrupt Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4</td>
+<td>0x0003</td>
+<td><code>TIM0_OVF</code></td>
+<td>Timer/Counter Overflow</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>0x0006</td>
+<td><code>TIM0_COMPA</code></td>
+<td>Timer/Counter Compare Match A</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>0x0007</td>
+<td><code>TIM0_COMPB</code></td>
+<td>Timer/Counter Compare Match B</td>
+</tr>
+</tbody>
+</table>
+<h2 id="пины-с-функциями-таймера">Пины с функциями таймера</h2>
+<p>См. раздел 10.3.1 <em>Alternate Functions of Port B</em> [<a
+href="#ref-attiny13a">ATtiny13A Datasheet</a>].</p>
+<table>
+<thead>
+<tr class="header">
+<th>Port Pin</th>
+<th>Alternate Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PB2</td>
+<td>T0: Timer/Counter0 Clock Source</td>
+</tr>
+<tr class="even">
+<td>PB1</td>
+<td>OC0B: Timer/Counter0 Compare Match B Output</td>
+</tr>
+<tr class="odd">
+<td>PB0</td>
+<td>OC0A: Timer/Counter0 Compare Match A Output</td>
+</tr>
+</tbody>
+</table>
+<h2 id="регистры">Регистры</h2>
+<h3 id="tccr0a">TCCR0A</h3>
+<p>См. раздел 11.9.1 [<a href="#ref-attiny13a">ATtiny13A
+Datasheet</a>].</p>
+<p><code>TCCR0A</code> - Timer/Counter Control Register A</p>
+<p><code>COM0A1</code>, <code>COM0A0</code> - Compare Match A
+Settings<br />
+<code>COM0B1</code>, <code>COM0B0</code> - Compare Match B
+Settings<br />
+<code>WGM01</code>, <code>WGM00</code> - Waveform Generation Mode
+(Настройка режима работы счетчика)</p>
+<h3 id="tccr0b">TCCR0B</h3>
+<p>См. раздел 11.9.2 [<a href="#ref-attiny13a">ATtiny13A
+Datasheet</a>].</p>
+<p><code>TCCR0B</code> - Timer/Counter Control Register B</p>
+<p><code>FOC0A</code> - Force Output Compare A (Принудительный вызов
+реакции на равенство OCR0A в не PWM режимах)<br />
+<code>FOC0B</code> - Force Output Compare B (Принудительный вызов
+реакции на равенство OCR0B в не PWM режимах)<br />
+<code>WGM02</code> - Waveform Generation Mode (Настройка режима работы
+счетчика)<br />
+<code>CS00</code>, <code>CS01</code>, <code>CS02</code> - Настройки
+тактирования (выбор источника и настройки делителя)</p>
+<h3 id="tcnt0">TCNT0</h3>
+<p>См. раздел 11.9.3 [<a href="#ref-attiny13a">ATtiny13A
+Datasheet</a>].</p>
+<p><code>TCNT0</code> - Текущее значение счетчика</p>
+<h3 id="ocr0a">OCR0A</h3>
+<p>См. раздел 11.9.4 [<a href="#ref-attiny13a">ATtiny13A
+Datasheet</a>].</p>
+<p><code>OCR0A</code> - Output Compare A (Значение для сравнения A)</p>
+<h3 id="ocr0b">OCR0B</h3>
+<p>См. раздел 11.9.5 [<a href="#ref-attiny13a">ATtiny13A
+Datasheet</a>].</p>
+<p><code>OCR0B</code> - Output Compare B (Значение для сравнения B)</p>
+<h3 id="timsk0">TIMSK0</h3>
+<p>См. раздел 11.9.6 [<a href="#ref-attiny13a">ATtiny13A
+Datasheet</a>].</p>
+<p><code>TIMSK0</code> - Timer Interrupt Mask Register</p>
+<p><code>OCIE0B</code> - Output Compare Interrupt B Enable<br />
+<code>OCIE0A</code> - Output Compare Interrupt A Enable<br />
+<code>TOIE0</code> - Overflow Interrupt Enable</p>
+<h3 id="tifr0">TIFR0</h3>
+<p>См. раздел 11.9.7 [<a href="#ref-attiny13a">ATtiny13A
+Datasheet</a>].</p>
+<p><code>TIFR0</code> - Timer Interrupt Flag Register</p>
+<p>Флаги событий. При установленном бите в TIMSK0 соответствующий флаг
+приводит к вызову прерывания.<br />
+Чтобы сбросить флаг программно - нужно установить его в 1. (Да,
+установить, чтобы сбросить)</p>
+<p><code>OCF0A</code> - Output Compare Flag A<br />
+<code>OCF0B</code> - Output Compare Flag B<br />
+<code>TOV0</code> - Overflow Flag</p>
+<h2 id="использование-режимы-работы">Использование / режимы работы</h2>
+<h3 id="источник-тактирования">Источник тактирования</h3>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 44%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><code>TCCR0B[CS02]</code></th>
+<th><code>TCCR0B[CS01]</code></th>
+<th><code>TCCR0B[CS00]</code></th>
+<th>Источник</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>Нет / остановлен</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>Внутренний источник</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>Внутренний / 8</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>Внутренний / 64</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>Внутренний / 256</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>Внутренний / 1024</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>Внешний <code>T0 (PB2)</code> По фронту сигнала</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>Внешний <code>T0 (PB2)</code> По спаду сигнала</td>
+</tr>
+</tbody>
+</table>
+<h3 id="компаратор-задать-значения-для-сравнения">Компаратор / задать
+значения для сравнения</h3>
+<p>см. 11.6 <em>Compare Match Output Unit</em> [<a
+href="#ref-attiny13a">ATtiny13A Datasheet</a>].</p>
+<p>Можно задать два значения для сравнения через регистры
+<code>OCR0A</code> и <code>OCR0B</code>.<br />
+Компаратор постоянно сравнивает значение регистра <code>TCNT0</code> с
+<code>OCR0A</code> и <code>OCR0B</code><br />
+При совпадении выставляются флаги <code>TIFR0[OCF0A]</code>,
+<code>TIFR0[OCF0B]</code>.</p>
+<h3 id="реакция-на-сигнал-компаратора">Реакция на сигнал
+компаратора</h3>
+<ul>
+<li>Прерывания <code>TIM0_COMPA</code>, <code>TIM0_COMPB</code>.<br />
+</li>
+<li>Переключение пинов <code>OC0A (PB0)</code>,
+<code>OC0B (PB1)</code>.</li>
+</ul>
+<p>Чтобы была возможность переключать пин - необходимо сконфигурировать
+пин как <code>output</code>, прописав 1 в соответствующий бит DDR
+регистра.</p>
+<h3 id="нормальныйстандартный-режим">Нормальный/Стандартный режим</h3>
+<p>Дефолтный режим Задается через
+<code>WGM00 = WGM01 = WGM02 = 0</code></p>
+<pre><code>TCCR0A &amp;= ~(1 &lt;&lt; WGM00)
+TCCR0A &amp;= ~(1 &lt;&lt; WGM01)
+TCCR0B &amp;= ~(1 &lt;&lt; WGM02)</code></pre>
+<p>Счетчик считает только вверх, доходит до MAX (255) и сбрасывается в
+0.<br />
+При этом выставляется <code>TIFR0[TOV0]</code>, что при включенном
+<code>TIMSK0[TOIE0]</code> приводит к вызову прерывания.<br />
+Компаратор в этом режиме также работает.</p>
+<h4 id="пример-настройки">Пример настройки</h4>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>TCCR0B <span class="op">=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> CS02<span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> CS00<span class="op">);</span> <span class="co">// prescale = 1024</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>TIMSK0 <span class="op">|=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> TOIE0<span class="op">);</span>             <span class="co">// Enables overflow interrupt </span></span></code></pre></div>
+<h3 id="ctc-режим-обнуление-таймера-по-сигналу-компаратора">CTC режим
+(обнуление таймера по сигналу компаратора)</h3>
+<p>Похож на дефолтный, но счетчик считает не до <code>MAX</code>, а до
+<code>OCR0A</code>. Задается через
+<code>WGM00 = WGM02 = 0; WGM01 = 1</code> Overflow Event в этом режиме
+происходит только если <code>OCR0A == MAX == 255</code>.</p>
+<pre><code>TCCR0A &amp;= ~(1 &lt;&lt; WGM00)
+TCCR0A |= (1 &lt;&lt; WGM01)
+TCCR0B &amp;= ~(1 &lt;&lt; WGM02)</code></pre>
+<p>В “не PWM” режимах можно управлять пинами <code>OC0A (PB0)</code>,
+<code>OC0B (PB1)</code> следующим образом:</p>
+<p><code>TCCR0A</code></p>
+<table>
+<thead>
+<tr class="header">
+<th>COM0A1</th>
+<th>COM0A0</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>Управление пином <code>OC0A (PB0)</code> отключено</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>Изменить значение <code>OC0A (PB0)</code></td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>Очистить <code>OC0A (PB0)</code></td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>Выставить <code>OC0A (PB0)</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>COM0B1</th>
+<th>COM0B0</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>Управление пином <code>OC0B (PB1)</code> отключено</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>Изменить значение <code>OC0B (PB1)</code></td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>Очистить <code>OC0B (PB1)</code></td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>Выставить <code>OC0B (PB1)</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="пример-настройки-1">Пример настройки</h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>OCR0A <span class="op">=</span> <span class="dv">253</span><span class="op">;</span>                        <span class="co">// частота = F_CPU / prescale / (OCR0A + 1)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>TCCR0B <span class="op">=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> CS01<span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> CS00<span class="op">);</span> <span class="co">// Prescale = 64</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>TCCR0A <span class="op">|=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> WGM01<span class="op">);</span>             <span class="co">// CTC mode</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>TIMSK0 <span class="op">|=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> OCIE0A<span class="op">);</span>            <span class="co">// Enables Compare A interrupt</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>TCCR0A <span class="op">|=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> COM0A0<span class="op">);</span>            <span class="co">// Enables toggling of PB0 pin</span></span></code></pre></div>
+<h2 id="литература">Литература</h2>
+<h5 id="ref-attiny13a">ATtiny13A Datasheet</h5>
+<p>Microchip Technology, Rev. 8126F–AVR–05/12</p>
+</body>
+</html>
