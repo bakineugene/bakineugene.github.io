@@ -9,18 +9,6 @@
   --quote: #f9fafb;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f172a;
-    --text: #e5e7eb;
-    --muted: #9ca3af;
-    --link: #60a5fa;
-    --border: #1f2933;
-    --code-bg: #111827;
-    --quote: #111827;
-  }
-}
-
 /* ===== Layout ===== */
 body {
   margin: 0;
