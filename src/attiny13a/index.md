@@ -1,5 +1,7 @@
 ## ATtiny13A pinout
 
+
+```{=html}
 <div id="attiny13a-pinout">
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420">
   <defs>
@@ -133,3 +135,4 @@
   </g>
 </svg>
 </div>
+```
