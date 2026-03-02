@@ -1,5 +1,7 @@
 ## ATtiny13A pinout
 
+### [Timer](timer.md)
+### [PWM](pwm.md)
 
 ```{=html}
 <div id="attiny13a-pinout">
@@ -136,3 +138,5 @@
 </svg>
 </div>
 ```
+
+

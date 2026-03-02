@@ -20,7 +20,7 @@ $(CSS_DST): $(CSS_SRC)
 # Convert markdown to HTML
 docs/%.html: src/%.md | $(CSS_DST)
 	@mkdir -p $(dir $@)
-	pandoc $< -o $@ -s --css=$(CSS)
+	pandoc $< -o $@ -s --css=$(CSS) --lua-filter=md-to-html-links.lua
 
 # Clean
 clean:
