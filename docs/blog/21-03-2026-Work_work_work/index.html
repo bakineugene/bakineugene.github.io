@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2026-03-21" />
+  <title>Работа, работа, работа</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Работа, работа, работа</h1>
+<p class="author">Eugene</p>
+<p class="date">2026-03-21</p>
+</header>
+<p>На работе произошла незапланированная смена проекта и команды в
+начале месяца. Пока погружаюсь в новый проект — времени ни на что не
+хватает, все курсы пошли по бороде.</p>
+<p>Язык — Java + Scala, но под боком есть команда с кодом на “плюсах”,
+надеюсь, выдастся случай написать пару строк. В общем, только на этой
+неделе более-менее начало появляться свободное время. Поэтому понемногу
+начинаю возвращаться к занятиям.</p>
+<p>Я в новый год обрадовался возможности накодить что-то полезное на
+ATtiny13A и завис на нём. Чего, конечно, очень сильно не хватало, — так
+это возможности выводить какую-либо информацию для дебага. Так что
+переезжаю в AVR-части своих экспериментов на ATmega328P.</p>
+<p>На «унах» есть преобразователь USB–UART, но с ним есть одна проблема,
+которая меня раздражает: авторесет при подключении.</p>
+<figure>
+<img src="images/photo_2026-03-21_23-34-09.jpg"
+alt="USB-UART преобразователь с конденсатором авторесета" />
+<figcaption aria-hidden="true">USB-UART преобразователь с конденсатором
+авторесета</figcaption>
+</figure>
+<p>Авторесет нужен для работы бутлоадера, но я пользуюсь внешним
+программатором, поэтому эта фича, по сути, бесполезна.</p>
+<p>В принципе, можно просто перерезать дорожку, но я недавно
+заказал-таки подходящие тоненькие жала для паяльника и пару пинцетов и
+решил попрактиковаться в работе с SMD-компонентами.</p>
+<p>План был — аккуратно перенести конденсатор, соединяющий USB–UART-чип
+с пином RESET.</p>
+<figure>
+<img src="images/photo_2026-03-21_23-34-11.jpg" alt="Жала" />
+<figcaption aria-hidden="true">Жала</figcaption>
+</figure>
+<figure>
+<img src="images/photo_2026-03-21_23-34-14.jpg" alt="Пинцеты" />
+<figcaption aria-hidden="true">Пинцеты</figcaption>
+</figure>
+<p>Вооружившись феном, я успешно это проделал, но после — сшиб стоящий
+рядом резистор. 🙄</p>
+<p>Попытавшись поставить на место резистор, — сшиб следующий по очереди
+светодиод. 🫠</p>
+<p>На этом принцип домино, к счастью, работать перестал.</p>
+<p>В общем, криво-косо, что-то да напаял до рабочего состояния. 😂 В
+результате понял, что надо тренироваться, и заказал наборы для пайки
+SMD. 💰</p>
+</body>
+</html>

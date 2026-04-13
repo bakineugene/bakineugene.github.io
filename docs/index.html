@@ -8,14 +8,40 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
 <h1 id="weblog-index">Weblog index</h1>
+<p>Welcome to my weblog. Here you’ll find technical articles, project
+updates, and miscellaneous thoughts.</p>
+<!-- BLOG_POSTS_START -->
+<h1 id="blog-posts">Blog Posts</h1>
+<ul>
+<li><strong>21 March 2026</strong>: <a
+href="blog/21-03-2026-Work_work_work/index.html">Работа, работа,
+работа</a> <em>by Eugene</em> <em>(tags: работа, ATtiny13A, SMD, пайка,
+эксперименты)</em> — Незапланированная смена проекта на работе, переход
+с ATtiny13A на ATmega328P и первая практика пайки SMD-компонентов.</li>
+</ul>
+<!-- BLOG_POSTS_END -->
+<h2 id="other-content">Other Content</h2>
+<ul>
+<li><a href="attiny13a/index.html">ATtiny13A Articles</a></li>
+<li><a href="resume/index.html">Resume</a></li>
+</ul>
 </body>
 </html>
