@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2026-01-28" />
+  <title>Timers</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Timers</h1>
+<p class="author">Eugene</p>
+<p class="date">2026-01-28</p>
+</header>
+<p><em>12:29</em><br />
+Начал подробнее изучать счетчики/таймеры.</p>
+<p><strong>Счетчики</strong></p>
+<p>Внезапно, основная функция счетчиков - считать.</p>
+<p>Счетчик Timer0 ATtiny13A - 8 битный. Умеет считать до 255. Счетчик
+Timer1 ATmega328P, а также все счетчики STM32F103C6T6 - 16 битные. Умеют
+считать до 65535.</p>
+<p>Счетчик может считать вверх. Счетчик может считать вниз. Счетчик
+может считать сначала вверх, потом вниз.</p>
+<p>Если счетчик умеет считать до <code>MAX</code>, то он может посчитать
+и до любого заданного числа (от 0 до <code>MAX</code>). Либо от
+заданного числа до <code>MAX</code>.</p>
+<p><strong>События</strong></p>
+<p>Счетчик может “генерировать” события в случае переполнения, либо
+достижения заданного числа.</p>
+<p>В качестве реакции на событие может быть вызвано прерывание, либо
+какое-то периферийное действие. Например
+включение/выключение/переключение GPIO ножки.</p>
+<p><strong>Тактирование</strong></p>
+<p>Чтобы работать - счетчику на вход нужно подавать сигналы, которые он
+будет считать. Это могут быть внешние сигналы (если конкретный счетчик
+это поддерживает). Тогда можно считать внешние события. Это могут быть
+сигналы от внутреннего генератора. Их можно пропустить через
+<code>prescaler</code>, отправляя на вход счетчика каждый N-ный
+сигнал.</p>
+<p>Если к счетчику прибавить генератор с известной частотой - получается
+Таймер.</p>
+<p><strong>Применение</strong></p>
+<ul>
+<li>Генерация задержек для вызова прерываний в ПО.</li>
+<li>Отсчет времени.</li>
+<li>В комбинации с другим таймером - подсчет количества событий в
+единицу времени (замер частоты).</li>
+<li>Полностью аппаратная генерация ШИМ (PWM) сигнала (без участия CPU).
+А значит - управление двигателями, генерация звука.</li>
+<li>В STM32 таймеры могут использоваться как источник аппаратных событий
+для других периферийных устройств, формируя цепочки «таймер → периферия»
+без прерываний и участия CPU.</li>
+</ul>
+<p>P.S. Оказалось, что не только в STM32. ADC в AVR также может быть
+запущен по сигналу с таймера</p>
+<p>#timers <img src="images/photo_58@28-01-2026_12-29-27.jpg"
+alt="Photo" /></p>
+</body>
+</html>

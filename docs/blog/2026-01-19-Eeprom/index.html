@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2026-01-19" />
+  <title>Eeprom</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Eeprom</h1>
+<p class="author">Eugene</p>
+<p class="date">2026-01-19</p>
+</header>
+<p><em>12:07</em><br />
+🎄 Пора уже елку убирать, а я еще не доделал некоторых вещей для
+гирлянды, которыми хотел заняться на праздниках. В качестве компромисса
+решил, что перед уборкой сделаю еще запись текущих настроек в
+память.</p>
+<p><code>EEPROM - Electrically Erasable Programmable Read Only Memory</code></p>
+<p>Т.е. память, которую можно только читать, но еще и стирать и писать.
+🤪</p>
+<p>Согласно объяснению от Ben Eater (<a
+href="https://www.youtube.com/watch?v=BA12Z7gQ4P0">https://www.youtube.com/watch?v=BA12Z7gQ4P0</a>):
+<code>ROM</code> - сначала делали просто память только для чтения,
+которая содержала данные с завода. <code>PROM</code> - затем стали
+производить память, которую можно было записать лишь однократно
+специальным программатором. <code>EPROM</code> - затем стали делать
+память, которую после программирования можно стереть ультрафиолетом.
+<code>EEPROM</code> - можно стереть специальным программатором, или
+вообще in-curcuit.</p>
+<p>Вот так и пришли к памяти только для чтения, в которую можно
+писать.</p>
+<p>Тем не менее эта память все равно позиционируется как “в основном для
+чтения” (<a
+href="https://www.youtube.com/watch?v=7qa1dsCpMMo">https://www.youtube.com/watch?v=7qa1dsCpMMo</a>).</p>
+<p>Используется для хранения конфигурации и пользовательских
+настроек.</p>
+<p>У <code>EEPROM</code> есть ограничение на число “стираний”. У
+<code>attiny13a</code> в даташите указано “минимум 100_000 циклов”.
+Поэтому рекомендуется применять <code>wear leveling</code> методики
+работы с этой памятью. Стараться равномерно изнашивать всю память, а не
+писать все время в одну область.</p>
+<p><strong>Разница с FlashROM</strong></p>
+<p>У stm32, например, нет встроенного <code>EEPROM</code>, вместо этого
+есть возможность выделить под конфигурацию место в флеш памяти.</p>
+<p>Насколько я понял, flash память построена на тех же принципах, что и
+<code>EEPROM</code>, но “удешевлена”. Если для <code>EEPROM</code> есть
+доступ до каждого байта, то <code>Flash</code> орудует “страницами” от
+1Kb. Соответственно для записи 1 байта конфигурации нужно перезаписать
+целую “страницу”. К тому же и erase циклов на порядок меньше - около
+10_000. Но зато и память дешевле.</p>
+<p>Контроллеры для flash-карточек и SSD применяют хитрые
+<code>wear leveling</code> алгоритмы чтобы изнашивать память равномерно.
+Там это еще актуальнее. Скажем, для управления 512 Gb SSD диском от
+samsung применяется 5 ядерный S4LR020, с 512 Мб оперативной памяти, 4
+ядра которого заняты исключительно работой с flash ячейками. Небольшой
+компьютер из начала нулевых только чтобы диском управлять.</p>
+<p><strong>5.3 EEPROM Data Memory</strong></p>
+<p>attiny13a имеет “на борту” 64 байта EEPROM с побайтным доступом
+100000 write/erase циклов для каждого байта</p>
+<p>Для полного цикла write/erase требуется аж 3.4 ms. Отдельно на чтение
+и запись - по 1.8 ms (Можно выполнить erase, “подготовив” память для
+записи заранее, а можно выполнять erase/write одной командой)</p>
+<p><strong>5.3.6 Preventing EEPROM Corruption</strong></p>
+<p>Для успешной записи в EEPROM необходимо стабильное питание. Чтобы
+предотвратить запись при недостаточном напряжении питания -
+рекомендуется использовать EEPROM в комбинации с Brown-out Detector
+(BOD).</p>
+<pre><code>ATtiny13A has an On-chip Brown-out Detection (BOD) circuit for monitoring the VCC level during
+operation by comparing it to a fixed trigger level.</code></pre>
+<p>#eeprom #attiny</p>
+</body>
+</html>

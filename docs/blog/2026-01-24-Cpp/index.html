@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2026-01-24" />
+  <title>Cpp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cpp</h1>
+<p class="author">Eugene</p>
+<p class="date">2026-01-24</p>
+</header>
+<p><em>14:22</em><br />
+Пройдемся теперь по умным указателям.</p>
+<p>Умные указатели - это, конечно, очень крутая штука. После знакомства
+с ними появилось хоть какое-то понимание, как на C++ можно писать
+крупные проекты. Хотя я еще ни одного крупного проекта на плюсах не
+трогал, но с умными указателями это уже не кажется таким уж
+мазохизмом.</p>
+<p>Чтобы получше понять концепцию - написал самую базовую имплементацию:
+<a
+href="https://gist.github.com/bakineugene/2ae0ad7d1f2f4d011f87a1582ef410ba">https://gist.github.com/bakineugene/2ae0ad7d1f2f4d011f87a1582ef410ba</a></p>
+<p><strong>std::unique_ptr : Unique Pointer</strong></p>
+<p>Первый из них - <code>std::unique_ptr</code> <a
+href="https://en.cppreference.com/w/cpp/memory/unique_ptr.html">https://en.cppreference.com/w/cpp/memory/unique_ptr.html</a>
+Моя упрощенная/учебная имплементация: <a
+href="https://gist.github.com/bakineugene/2ae0ad7d1f2f4d011f87a1582ef410ba#file-unique-h-L4">https://gist.github.com/bakineugene/2ae0ad7d1f2f4d011f87a1582ef410ba#file-unique-h-L4</a></p>
+<p>Это как раз <code>movable only</code> тип, хранящий указатель на
+объект. На самом деле тут даже объяснять особо нечего. Все уже было
+сказано в посте про <code>RAII</code> и про move семантику. Но можно
+обсудить интерфейс <code>std::unique_ptr</code></p>
+<p>Для использования нужно подключить
+<code>#include &lt;memory&gt;</code></p>
+<p><code>std::unique_ptr</code> содержит указатель на объект, массив
+объектов или nullptr.</p>
+<p>Для создания указателя можно как вызвать напрямую конструктор,
+передав ему <code>new Object</code> Либо воспользоваться специальной
+функцией <code>std::make_unique&lt;Object&gt;()</code>, которая создаст
+экземпляр <code>Object</code> конструктором по умолчанию.</p>
+<p>std::unique_ptr старается вести себя как обычный указатель Чтобы
+определить владеет ли указатель каким либо объектом - определен
+<code>operator bool</code> Определены операторы <code>operator*</code>,
+<code>operator-&gt;</code>, <code>operator[]</code> для доступа к
+завернутому объекту.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Foo <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> bar<span class="op">{};</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>unique_ptr<span class="op">&lt;</span>Foo<span class="op">&gt;</span> ptr<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(!</span>ptr<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// not initialized</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ptr <span class="op">=</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>Foo<span class="op">&gt;();</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ptr<span class="op">-&gt;</span>bar <span class="op">=</span> <span class="dv">42</span><span class="op">;</span></span></code></pre></div>
+<p>Кроме того можно: <code>T* get()</code> - получить доступ
+непосредственно к хранимому указателю <code>T* release()</code> -
+забрать хранимый указатель у <code>unique_ptr</code>. После этого вызова
+владение переходит вызывающему коду (ответственность за вызов delete)
+<code>reset(T*)</code> - позволяет завернуть в <code>unique_ptr</code>
+новый указатель (уничтожив старый) <code>swap(unique_ptr&amp;)</code> -
+позволяет поменять местами содержимое двух <code>unique_ptr</code></p>
+<p>Также есть возможность задавать <code>deleter</code> - но это
+необходимо только на случай, если заворачиваемый объект не умеет
+прибрать за собой - например был инициализирован C кодом</p>
+<p>#cpp #move_semantics #smart_pointers #memory #unique_ptr</p>
+<hr />
+<p><em>20:12</em><br />
+<strong>std::shared_ptr : Shared Pointer</strong></p>
+<p>Это указатель, который позволяет поделить владение объектом. Когда
+последний <code>shared_ptr</code> будет уничтожен - он прихватит с собой
+и managed объект.</p>
+<p><a
+href="https://en.cppreference.com/w/cpp/memory/shared_ptr.html">https://en.cppreference.com/w/cpp/memory/shared_ptr.html</a></p>
+<p>Сильно упрощенная версия: <a
+href="https://gist.github.com/bakineugene/2ae0ad7d1f2f4d011f87a1582ef410ba#file-shared-h-L1">https://gist.github.com/bakineugene/2ae0ad7d1f2f4d011f87a1582ef410ba#file-shared-h-L1</a></p>
+<p>Объяснение устройства с картинками: <a
+href="https://ddanilov.me/shared-ptr-is-evil/">https://ddanilov.me/shared-ptr-is-evil/</a></p>
+<pre><code>In a typical implementation, shared_ptr holds only two pointers:
+    the stored pointer (one returned by get());
+    a pointer to control block.</code></pre>
+<p>Кроме самого указателя на managed объект - создаем и храним указатель
+на специальную вспомогательную структуру с метаданными.</p>
+<pre><code>The control block is a dynamically-allocated object that holds:
+    either a pointer to the managed object or the managed object itself;
+    the deleter (type-erased);
+    the allocator (type-erased);
+    the number of shared_ptrs that own the managed object;
+    the number of weak_ptrs that refer to the managed object.</code></pre>
+<p>Структура единая и для <code>shared</code> и для <code>weak</code>,
+поэтому содержит счетчики обоих типов указателей.</p>
+<p>При создании <code>ptr</code> инкрементит соответствующее число. При
+уничтожении декрементит. При создании копии инстансы
+<code>shared_ptr</code> и <code>weak_ptr</code> делят между собой
+указатель на эти метаданные, поэтому текущее кол-во “пользователей”
+видят все. Когда количество shared == 0 - уничтожается managed объект (в
+общем случае просто вызывается деструктор). Когда количество и shared и
+weak указателей == 0, уничтожается и структура с метаданными.</p>
+<p>Образно говоря, вот так (но на самом деле нет):</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">~</span>Shared<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(!</span><span class="va">counter_</span><span class="op">)</span> <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span><span class="va">counter_</span><span class="op">-&gt;</span>strong<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span><span class="va">counter_</span><span class="op">-&gt;</span>strong <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">delete</span> <span class="va">pointer_</span><span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span><span class="va">counter_</span><span class="op">-&gt;</span>strong <span class="op">==</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> <span class="va">counter_</span><span class="op">-&gt;</span>weak <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">delete</span> <span class="va">counter_</span><span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><strong>Usage</strong></p>
+<p>Использование <code>std::shared_ptr</code> в целом похоже на
+<code>std::unique_ptr</code></p>
+<p>Для создания можно применять конструктор, передав в него
+<code>new Object</code> или
+<code>unique_ptr&lt;Object&gt;&amp;&amp;</code>, либо воспользоваться
+ф-цией <code>std::make_shared&lt;Object&gt;()</code>.</p>
+<p>Добавились функции <code>unique</code> и <code>use_count</code> для
+получении информации о кол-ве <code>shared_ptr</code> пользователей.</p>
+<p><strong>different pointers</strong></p>
+<p>Можно заметить, вот такую интересную фразу в implementation
+details:</p>
+<pre><code>The pointer held by the shared_ptr directly is the one returned by get(), while the pointer/object held by the control block is the one that will be deleted when the number of shared owners reaches zero. These pointers are not necessarily equal.</code></pre>
+<p>Указатель возвращаемый из get() может не указывать на managed object.
+Добиться такого можно используя <code>aliasing constructor</code>:</p>
+<pre><code>The aliasing constructor: constructs a shared_ptr which shares ownership information with the initial value of r, but holds an unrelated and unmanaged pointer ptr. However, calling get() on this shared_ptr will always return a copy of ptr. It is the responsibility of the programmer to make sure that this ptr remains valid as long as this shared_ptr exists</code></pre>
+<p>Т.е. мы можем получить указатель, который возвращает какое-то
+значение, являющееся составной частью managed объекта. При этом,
+несмотря на то, что из get() будет возвращаться совсем другой указатель
+- подсчет использований будет идти для “базового” managed объекта.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> base_ptr <span class="op">=</span> <span class="bu">std::</span>shared_ptr<span class="op">&lt;</span><span class="dt">int</span><span class="op">[]&gt;(</span><span class="kw">new</span> <span class="dt">int</span><span class="op">[</span><span class="dv">2</span><span class="op">]);</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    base_ptr<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="dv">123</span><span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    base_ptr<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="dv">456</span><span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> ptr_0 <span class="op">=</span> <span class="bu">std::</span>shared_ptr<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>base_ptr<span class="op">,</span> <span class="op">&amp;</span>base_ptr<span class="op">.</span>get<span class="op">()[</span><span class="dv">0</span><span class="op">]);</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> ptr_1 <span class="op">=</span> <span class="bu">std::</span>shared_ptr<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>base_ptr<span class="op">,</span> <span class="op">&amp;</span>base_ptr<span class="op">.</span>get<span class="op">()[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;ptr_0 = &quot;</span> <span class="op">&lt;&lt;</span> <span class="op">*</span>ptr_0 <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;ptr_1 = &quot;</span> <span class="op">&lt;&lt;</span> <span class="op">*</span>ptr_1 <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;base_ptr count = &quot;</span> <span class="op">&lt;&lt;</span> base_ptr<span class="op">.</span>use_count<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<pre><code>$ ./a.out
+ptr_0 = 123
+ptr_1 = 456
+base_ptr count = 3</code></pre>
+<p>В целом - подсчет ссылок это уже почти GC.</p>
+<p>Но, если создать кольцевую зависимость между разными managed
+объектами - то память никогда не освободится. Тут то и приходит на
+помощь weak_ptr</p>
+<p>#cpp #smart_pointers #memory #shared_ptr</p>
+</body>
+</html>

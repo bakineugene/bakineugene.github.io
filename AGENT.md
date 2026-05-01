@@ -20,13 +20,14 @@ bakineugene.github.io/
 │   └── blog/                   # Generated blog posts
 ├── scripts/                    # Build automation scripts
 │   ├── generate-blog-index.py  # Blog post listing generator
-│   └── insert_blog_listing.py  # Template insertion script
+│   ├── insert_blog_listing.py  # Template insertion script
+│   └── copy_telegram_media.py  # Media file copier for blog posts
 ├── src/                        # Source Markdown files
 │   ├── index.md                # Generated index (from template)
 │   ├── index.template.md       # Index template with blog markers
 │   ├── attiny13a/              # ATtiny13A microcontroller articles
 │   └── blog/                   # Blog post directories
-│       ├── DD-MM-YYYY-Post_Title/
+│       ├── YYYY-MM-DD-Post_Title/
 │       │   └── index.md        # Blog post with frontmatter
 │       └── ...                 # More blog posts
 └── resume/                     # Resume submodule (git submodule)
@@ -51,7 +52,7 @@ bakineugene.github.io/
 The blog system extends the static site generator with automated blog post management, listing generation, and template-based index creation.
 
 ### Blog Post Structure
-- **Directory Naming**: `DD-MM-YYYY-Post_Title` (e.g., `13-04-2026-Welcome_To_My_Blog`)
+- **Directory Naming**: `YYYY-MM-DD-Post_Title` (e.g., `2026-04-13-Welcome_To_My_Blog`)
 - **Content File**: Each directory contains an `index.md` file
 - **Frontmatter**: YAML frontmatter at the top of each post for metadata:
   ```yaml
@@ -176,10 +177,10 @@ open docs/new-topic/index.html
 ### 2. Adding a New Blog Post
 ```bash
 # Create blog post directory with naming convention
-mkdir -p src/blog/DD-MM-YYYY-Post_Title
+mkdir -p src/blog/YYYY-MM-DD-Post_Title
 
 # Create index.md with YAML frontmatter
-vim src/blog/DD-MM-YYYY-Post_Title/index.md
+vim src/blog/YYYY-MM-DD-Post_Title/index.md
 
 # Add frontmatter and content
 # Example frontmatter:
@@ -195,15 +196,54 @@ vim src/blog/DD-MM-YYYY-Post_Title/index.md
 make
 
 # Verify the output
-open docs/blog/DD-MM-YYYY-Post_Title/index.html
+open docs/blog/YYYY-MM-DD-Post_Title/index.html
 ```
 
-### 3. Updating Styles
+### 3. Handling Media Files for Blog Posts
+The `scripts/copy_telegram_media.py` script provides media file management capabilities for blog posts. It can copy media files from external sources into blog post directories and update Markdown content accordingly.
+
+#### Media File Organization
+- **Photos**: Copied to `blog_post/images/`
+- **Videos**: Copied to `blog_post/videos/`
+- **Documents/PDFs**: Copied to `blog_post/files/`
+- **Audio files**: Copied to `blog_post/audio/`
+
+#### Using the Media Copy Script
+```bash
+# Basic usage with a JSON file containing media references
+python3 scripts/copy_telegram_media.py --input media_references.json
+
+# Dry-run mode to see what would be copied
+python3 scripts/copy_telegram_media.py --input media_references.json --dry-run
+
+# With verbose output
+python3 scripts/copy_telegram_media.py --input media_references.json --verbose
+
+# Process only specific blog posts
+python3 scripts/copy_telegram_media.py --input media_references.json --blog-dir src/blog
+```
+
+#### Script Features
+- **Automatic directory creation**: Creates `images/`, `videos/`, `files/`, `audio/` subdirectories as needed
+- **Path updating**: Updates Markdown content to reference new file locations
+- **Duplicate handling**: Adds numeric suffixes to avoid filename conflicts
+- **Error handling**: Skips missing files and placeholder paths
+- **Dry-run mode**: Preview operations without copying files
+- **Progress reporting**: Shows processing status for each blog post
+
+#### Integration with Blog System
+The script works with the existing blog system structure:
+- Blog posts are in `src/blog/YYYY-MM-DD-Post_Title/` directories
+- Each post has an `index.md` file with YAML frontmatter
+- Media references in Markdown are updated automatically
+- The script preserves existing frontmatter when updating content
+
+### 4. Updating Styles
 1. Edit `style.css`
 2. Run `make` to copy to `docs/`
 3. Test with existing pages
 
-### 4. Modifying Resume
+### 5. Modifying Resume
 ```bash
 cd resume
 # Edit data.json for content changes
@@ -212,7 +252,7 @@ cd resume
 node generator.js
 ```
 
-### 5. Troubleshooting Build Issues
+### 6. Troubleshooting Build Issues
 - Ensure `pandoc` is installed: `pandoc --version`
 - Check Makefile syntax: `make -n` (dry run)
 - Verify file permissions

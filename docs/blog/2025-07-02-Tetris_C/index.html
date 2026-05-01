@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2025-07-02" />
+  <title>Tetris C</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Tetris C</h1>
+<p class="author">Eugene</p>
+<p class="date">2025-07-02</p>
+</header>
+<p><em>22:13</em><br />
+Раздумываю о том, чтобы добавить звук.</p>
+<p>Нашел у себя два излучателя. Пьезоизлучатель и электромагнитный.
+Первый звучит погромче. Но вообще от 5 вольт оба слабовато работают.
+Нужно по крайней мере 10 для хорошей громкости.</p>
+<p>#tetris_c #sound <a
+href="(File%20exceeds%20maximum%20size.%20Change%20data%20exporting%20settings%20to%20download.)">Video:
+(File exceeds maximum size. Change data exporting settings to
+download.)</a></p>
+<hr />
+<p><em>22:13</em></p>
+<p><a
+href="(File%20exceeds%20maximum%20size.%20Change%20data%20exporting%20settings%20to%20download.)">Video:
+(File exceeds maximum size. Change data exporting settings to
+download.)</a></p>
+<hr />
+<p><em>11:46</em><br />
+Внезапно я узнал, что плату в форм факторе ардуино уно нужно питать
+напряжением от 7 до 12 В. А я подавал 5 и питающее напряжение (как и
+напряжение на выходе ШИМ) в итоге было = 3.3В. RTFM</p>
+<p>В общем я попробовал оба излучателя уже при работе с МК и теперь мне
+кажется, что громче звучит HC12G.</p>
+<p>Музычка отсюда: <a
+href="https://radioparty.ru/programming/avr/c/284-lesson12-music">https://radioparty.ru/programming/avr/c/284-lesson12-music</a>
+Но нужно будет чтобы звуки производились “в фоне” + Сначала я заметил,
+что HC12G жрет 0.1А даже когда не звучит. Оказалось, что код оставляет
+пин в состоянии логической 1 при отсутствии музыки Нужно добавить сброс
+пина в 0 при окончании проигрывания ноты</p>
+<p>Сейчас мне уже кажется, что громкости достаточно</p>
+<p>#avr #sound <a href="videos/video_5@03-07-2025_11-46-59.mp4">Video:
+videos/video_5@03-07-2025_11-46-59.mp4</a></p>
+<hr />
+<p><em>11:47</em></p>
+<p><a href="videos/video_6@03-07-2025_11-47-00.mp4">Video:
+videos/video_6@03-07-2025_11-47-00.mp4</a></p>
+</body>
+</html>

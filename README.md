@@ -53,7 +53,7 @@ make
 Create Markdown files in `src/` directory. Use relative `.md` links – they will be automatically converted to `.html` links.
 
 #### Blog Posts
-1. Create a directory in `src/blog/` with naming convention `DD-MM-YYYY-Post_Title`
+1. Create a directory in `src/blog/` with naming convention `YYYY-MM-DD-Post_Title`
 2. Add an `index.md` file with YAML frontmatter:
    ```yaml
    ---

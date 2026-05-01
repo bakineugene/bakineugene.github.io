@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2025-06-01" />
+  <title>Electronics</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Electronics</h1>
+<p class="author">Eugene</p>
+<p class="date">2025-06-01</p>
+</header>
+<p><em>13:24</em> Попробовал симуляцию в EasyEDA (<a
+href="https://easyeda.com/">https://easyeda.com/</a>)</p>
+<p>К сожалению весь обсчет идет online</p>
+<p>Во первых, часто у меня нет ответа от сервера Во вторых - можно
+уткнуться в лимит</p>
+<p>#electronics #simulation #cad <img
+src="images/photo_10@01-06-2025_13-24-42.jpg" alt="Photo" /></p>
+<hr />
+<p><em>13:24</em></p>
+<figure>
+<img src="images/photo_11@01-06-2025_13-24-42.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>13:46</em><br />
+А вот так ведет себя LC фильтр с частотой отсечки в 500 и 50 Гц</p>
+<p>#electronics <img src="images/photo_12@01-06-2025_13-46-09.jpg"
+alt="Photo" /></p>
+<hr />
+<p><em>13:46</em></p>
+<figure>
+<img src="images/photo_13@01-06-2025_13-46-09.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>13:46</em></p>
+<figure>
+<img src="images/photo_14@01-06-2025_13-46-09.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>16:59</em></p>
+<figure>
+<img src="images/photo_15@01-06-2025_16-59-51.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>17:38</em><br />
+Попробовал запустить симуляцию для Т-фильтра (LCL). Без нагрузки разницы
+нет, что в принципе логично.</p>
+<p>Добавил нагрузку 100 Ом - тогда разница на лицо</p>
+<p>#electronics #simulation <img
+src="images/photo_16@01-06-2025_17-38-02.jpg" alt="Photo" /></p>
+<hr />
+<p><em>17:38</em></p>
+<figure>
+<img src="images/photo_17@01-06-2025_17-38-02.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>17:38</em></p>
+<figure>
+<img src="images/photo_18@01-06-2025_17-38-02.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>17:38</em></p>
+<figure>
+<img src="images/photo_19@01-06-2025_17-38-02.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>18:18</em><br />
+Как мне сейчас кажется, часть Т фильтра в красном кружке (L2 + R1) - это
+просто второй Г фильтр.</p>
+<p>Т.е. мы просто используем часть схемы вне фильтра как часть
+фильтра.</p>
+<p>Соответственно П фильтр - это также просто два Г фильтра, но чтобы он
+давал какие-то преимущества нужно чтобы между L1 и V1 существовало
+какое-то сопротивление. Например внутреннее сопротивление источника
+питания.</p>
+<p>#electronics <img src="images/photo_20@01-06-2025_18-18-31.jpg"
+alt="Photo" /></p>
+<hr />
+<p><em>18:18</em></p>
+<figure>
+<img src="images/photo_21@01-06-2025_18-18-31.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>22:19</em></p>
+<hr />
+<p><em>22:19</em></p>
+<hr />
+<p><em>12:10</em><br />
+Затухание для RC фильтра и LC фильтра С одинаковым сопротивлением на 500
+Hz <img src="images/photo_22@02-06-2025_12-10-16.jpg" alt="Photo" /></p>
+<hr />
+<p><em>12:12</em><br />
+То же самое от 0 <img src="images/photo_23@02-06-2025_12-12-52.jpg"
+alt="Photo" /></p>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2026-01-31" />
+  <title>Adc</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Adc</h1>
+<p class="author">Eugene</p>
+<p class="date">2026-01-31</p>
+</header>
+<p><em>23:35</em><br />
+Не закончил с таймерами, но срочно захотелось прикрутить клавиатуру на
+делителях напряжения, поэтому решил прочитать про <code>ADС</code>. Пока
+что применительно к <code>AVR</code>. И тема оказалась достаточно
+интересной.</p>
+<p><strong>Примечание</strong> Клавиатура на делителях напряжения -
+способ сэкономить пины, подключив несколько кнопок к ADC Нажатием каждой
+кнопки создает на пине разное напряжение. Замеряем напряжение -
+реагируем в программе.</p>
+<p><strong>14. Analog to Digital Converter</strong></p>
+<p>“Разрешение” <code>ADC attiny13a</code> - 10 бит “Ошибка” по модулю
+до 2 <code>LSB</code> (least significant bit).</p>
+<pre><code>LSB = Vref / 1024</code></pre>
+<p>Показания можно снимать с 4 пинов, выбираемых через мультиплексор.
+(Правда один из них это <code>RESET</code> пин) Результат 10 битное
+число - записывается не очень удобно в 2 регистра (<code>ADCH</code>,
+<code>ADCL</code>) 8 бит в одном и 2 в другом Но можно выбрать 8 битный
+режим, тогда все число поместится в 1 регистр</p>
+<p>В качестве <code>Vref</code> можно выбрать как <code>Vcc</code> так и
+внутренний источник напряжения 1.1V</p>
+<p>Запускать измерение можно как “вручную” так и используя
+<code>PCINT</code>/<code>EXTI</code>/<code>Timer</code>/<code>Analog Comparator</code>
+в качестве триггера Либо включить непрерывные преобразования (запускать
+следующее преобразование сразу после завершения текущего)</p>
+<p>Кроме того <code>ADC</code> может работать в специальном режиме сна
+для повышения точности (<code>Sleep Mode Noise Canceler</code>). Тогда
+глушится работа <code>CPU</code> и периферии, производится замер, по
+завершении которого <code>CPU</code> запускается.</p>
+<p><strong>Принцип работы</strong></p>
+<p>На входе в <code>ADC</code> (после мультиплексора, если на схеме
+<code>attiny13a</code> смотреть) стоит
+<code>Sample &amp; Hold Comparator</code>. Его задача - взять “пробу”
+(sample) напряжения со входа (с мультиплексора) и удержать его, чтобы
+можно было производить замеры. Внутри стоит небольшой конденсатор (14pF
+total capacitance including Csh). Как следствие - нужно дать этому
+конденсатору зарядиться, поэтому LLM предлагает “прогреть”
+<code>ADC</code> выкинув первый замер и взяв только второй. Документация
+говорит следующее:</p>
+<pre><code>The ADC is optimized for analog signals with an output impedance of approximately 10 kΩ or
+less. If such a source is used, the sampling time will be negligible. If a source with higher imped-
+ance is used, the sampling time will depend on how long time the source needs to charge the
+S/H capacitor, with can vary widely. The user is recommended to only use low impedant sources
+with slowly varying signals, since this minimizes the required charge transfer to the S/H
+capacitor.</code></pre>
+<p>Кроме того на вход в <code>SHC</code> (по схеме из документации)
+приходит напряжение, генерируемое <code>10-bit DAC</code>, образованное
+“делением” референсного напряжения. Затем, по сути, выполняется бинарный
+поиск. Компаратор обеспечивает операцию сравнения, а
+<code>Conversion Logic</code> блок генерирует новое напряжение и “ищет”
+следующий бит.</p>
+<ol type="1">
+<li>Заряжаем конденсатор</li>
+<li>Производим серию замеров используя в качестве алгоритма бинарный
+поиск</li>
+<li>Забираем результат</li>
+</ol>
+<p><strong>Тактирование</strong></p>
+<p><code>ADC</code> тактируется от частоты <code>F_CPU</code>
+пропущенной через <code>prescaler</code>. Значение
+<code>prescaler</code> нужно выбирать таким образом, чтобы время одного
+(полного) преобразования укладывалось в диапазон
+<code>13 - 260 µs</code>.</p>
+<p>Время одного преобразования однозначно зависит от частоты т.к. всегда
+занимает 13 <code>ADC</code> циклов.
+<code>prescaler = F_CPU * dt / 13</code> Таким образом для
+<code>F_CPU == 9.6Mhz</code> <code>prescaler</code> должен быть от 9.6
+до 192. По факту доступны значения степеней двойки от 2 до 128</p>
+<p>Насколько я понимаю это ограничение на время связано именно с
+требованиями к зарядке S/H конденсатора. Конверсия гарантированно
+занимает 13 <code>ADC</code> циклов. 10 циклов уходит на сам замер (10
+бит результата), а около 1.5 цикла отводится на выборку и удержание
+входного напряжения на этом конденсаторе.</p>
+<p>P.S. Первая конверсия после запуска ADC занимает 25 циклов (14.5 на
+S&amp;H) P.P.S. Документация atmega328p просит соблюдать время конверсии
+<code>65 to 260µs</code>, хотя Csh также = 14pF</p>
+<pre><code>14.5 Prescaling and Conversion Timing
+
+A normal conversion takes 13 ADC clock cycles. The first conversion after the ADC is switched
+on (ADEN in ADCSRA is set) takes 25 ADC clock cycles in order to initialize the analog circuitry
+...
+The actual sample-and-hold takes place 1.5 ADC clock cycles after the start of a normal conver-
+sion and 14.5 ADC clock cycles after the start of an first conversion.</code></pre>
+<p>#adc #attiny <img src="images/photo_59@31-01-2026_23-35-53.jpg"
+alt="Photo" /></p>
+<hr />
+<p><em>18:09</em><br />
+Клавиатуру захотелось прикрутить, потому что подумалось, что вместе с
+<code>ws2812b</code> лентой это идеальная комбинация для
+<code>attiny13a</code> 🤣</p>
+<p>И клавиатура и лента для индикации занимают по одному пину. И ещё
+остаётся целых 3 свободных. 😱</p>
+<p>Для примера - управление ШИМ с индикацией через ленту.</p>
+<p>К слову, если добиться, чтобы все кнопки клавиатуры давали
+<code>&lt;0.3*Vcc</code>, то можно использовать <code>PCINT0</code>
+прерывание с того же пина, чтобы стартовать чтение <code>ADC</code>.
+Правда без задержки в коде, полностью с аппаратным триггером, у меня
+пока не заработало.</p>
+<p>#attiny #ws2812b #pwm <a
+href="videos/video_16@01-02-2026_18-09-23.mp4">Video:
+videos/video_16@01-02-2026_18-09-23.mp4</a></p>
+</body>
+</html>

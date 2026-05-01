@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2026-02-08" />
+  <title>Stm32</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Stm32</h1>
+<p class="author">Eugene</p>
+<p class="date">2026-02-08</p>
+</header>
+<p><em>11:06</em><br />
+<strong>Nucleo development board</strong></p>
+<p>Когда записывался на курс по <code>stm32</code> в списке оборудования
+были платы Nucleo и Miluino. Я прикупил обе. 💰 Но сперва они показались
+мне черсчур прекрасными для моих кривых ручонок и я начал с
+<code>blue pill</code>. А недавно подумал - “а чё это”, надо и к
+прекрасному иногда прикасаться.</p>
+<p>Начну с Nucleo.</p>
+<p><strong>Упаковка</strong></p>
+<p>Заказывал с Aliexpress. Приходит в коробке. Внутри хитро нарезанная
+бумага для объема, бумажка с qr кодом и плата в антистатическом
+пакете.</p>
+<p><strong>Внешний вид</strong></p>
+<p>Белая. Две секции - одна с МК, которым мы управляем. Другая с ST-LINK
+программатором. Между ними прорезь, которая как будто предполагает, что
+плату можно разломать на две части и пользоваться ими по отдельности. 😨
+И, судя по всему, это действительно можно сделать - пины программатора
+выведены отдельно, им можно пользоваться независимо. Питание и генератор
+задающей частоты идут также с платы программатора, но предусмотрена
+возможность переключиться на независимое питание и кварцевый генератор.
+Правда на моей плате кварца на второй стороне нет.</p>
+<p>Не знаю, есть ли такие люди, которые отламывали часть с
+программатором. 🤔</p>
+<p>На плате присутствуют штырьки для всех пинов МК. Причем выведены они
+как на верхнюю сторону платы, так и на нижнюю.</p>
+<p>Также присутствуют “гнезда” arduino style. Причем, как оказалось, это
+буквально arduino style. Гнезда предполагают совместимость с arduino
+шилдами. Гнезда даже промаркированы в ардуино формате - A0-A5
+(аналоговые порты) и D0-D15 (цифровые). STM32 специфичной маркировки
+нет. Штырьки не промаркированы никак. “Очень удобно”. Зачем мне знать
+как называются эти штырьки по понятиям arduino?</p>
+<p>Лучше бы на бумажке хотя бы распиновку печатали, а не qr code.</p>
+<p>На плату выведена кнопка RESET и кнопка USER, подключенная к C13.
+Также на плату выведен красный LED питания и зеленый пользовательский
+LED, выведенный на ногу PA5.</p>
+<p>Некоторые из моих сокурсников пишут в чате, что сожгли SPI, у
+которого на эту ногу приходит SCK. Видимо при попытке включить
+одновременно и SPI и мигать светодиодом. Для интереса я стал смотреть в
+чем отличие Nucleo и Arduino UNO в этом месте и обнаружил, что на UNO
+светодиод подключен не напрямую к МК, а через операционный усилитель (на
+всех моих платах - LM358). Не буду делать выводов, как именно влияет ли
+это на выживаемость МК и работу SPI, так что просто информация для
+размышления.</p>
+<p>И светодиод и кнопку можно отключить с помощью одного из
+многочисленных solder bridges, предназначенных для настройки работы
+платы. Они находятся на нижней стороне.</p>
+<p>А также есть специальный джампер IDD, для подключения амперметра.</p>
+<p><strong>Характеристики</strong></p>
+<p>В отличие от моих “таблеток”, тут STM32F103RBT6 - больше памяти и
+больше пинов.</p>
+<pre><code>STM32F103RBT6
+Flash: 128 Kb
+SRAM: 20 Kb
+Package: LQFP-64
+GPIO: 51</code></pre>
+<p><strong>Разное</strong></p>
+<p>При подключении по USB открывается “флешка”, в которой лежит ссылка
+на сайт <a
+href="https://os.mbed.com/platforms/ST-Nucleo-F103RB/">https://os.mbed.com/platforms/ST-Nucleo-F103RB/</a></p>
+<p>Дефолтная прошивка предлагает нажать на кнопку и лицезреть, как
+меняется частота мигания светодиода.</p>
+<p>После замены букв портов и номеров пинов мигалка от
+<code>blue pill</code> завелась без приключений.</p>
+<p>Не то, чтобы был особый смысл в покупке этой платы. Возможно, в
+некоторых случаях, это удобнее чем breadboard + blue pill. Время
+покажет.</p>
+<p>#stm32 #nucleo <img src="images/photo_61@08-02-2026_11-06-16.jpg"
+alt="Photo" /></p>
+<hr />
+<p><em>11:06</em></p>
+<figure>
+<img src="images/photo_62@08-02-2026_11-06-16.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>11:06</em></p>
+<figure>
+<img src="images/photo_63@08-02-2026_11-06-16.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>11:06</em></p>
+<figure>
+<img src="images/photo_64@08-02-2026_11-06-16.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>11:06</em></p>
+<figure>
+<img src="images/photo_65@08-02-2026_11-06-16.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>11:06</em></p>
+<figure>
+<img src="images/photo_66@08-02-2026_11-06-16.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>11:06</em></p>
+<p><a href="videos/2026-02-07%2016-47-45.mp4">Video: videos/2026-02-07
+16-47-45.mp4</a></p>
+<hr />
+<p><em>11:06</em></p>
+<p><a href="videos/2026-02-07%2018-09-11.mp4">Video: videos/2026-02-07
+18-09-11.mp4</a></p>
+</body>
+</html>

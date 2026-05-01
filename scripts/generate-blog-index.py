@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Generate blog post listing for index.md
-Scans src/blog/ for directories matching DD-MM-YYYY-* pattern
-Generates markdown list in reverse lexicographical order
+Scans src/blog/ for directories matching YYYY-MM-DD-* pattern
+Generates markdown list in reverse chronological order
 """
 
 import os
@@ -12,10 +12,10 @@ from datetime import datetime
 
 def extract_date_title(dirname):
     """Extract date and title from directory name"""
-    pattern = r'^(\d{2})-(\d{2})-(\d{4})-(.+)$'
+    pattern = r'^(\d{4})-(\d{2})-(\d{2})-(.+)$'
     match = re.match(pattern, dirname)
     if match:
-        day, month, year, title = match.groups()
+        year, month, day, title = match.groups()
         # Convert to readable date
         try:
             date_obj = datetime(int(year), int(month), int(day))
@@ -29,7 +29,7 @@ def extract_date_title(dirname):
             'dirname': dirname,
             'date': readable_date,
             'title': readable_title,
-            'raw_date': f'{year}{month}{day}',  # For sorting
+            'raw_date': f'{year}{month}{day}',  # For sorting (YYYYMMDD)
             'year': year,
             'month': month,
             'day': day
@@ -110,8 +110,8 @@ def generate_blog_listing(blog_dir='src/blog'):
     if not posts:
         return "# Blog\n\nNo blog posts yet.\n"
     
-    # Sort in reverse lexicographical order (newest first)
-    posts.sort(key=lambda x: x['dirname'], reverse=True)
+    # Sort in reverse chronological order (newest first)
+    posts.sort(key=lambda x: x['raw_date'], reverse=True)
     
     # Generate markdown
     lines = ["# Blog Posts\n"]

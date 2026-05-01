@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2026-01-06" />
+  <title>Cpp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cpp</h1>
+<p class="author">Eugene</p>
+<p class="date">2026-01-06</p>
+</header>
+<p><em>07:55</em><br />
+Часть №3 Семантика перемещения</p>
+<p>В предыдущей серии сформировалась проблема - необходимо избежать
+дорогой операции копирования при работе с временными объектами. Для
+таких объектов есть специальный термин - <code>rvalue</code> (right
+value).</p>
+<p><a
+href="https://en.cppreference.com/w/cpp/language/value_category.html">https://en.cppreference.com/w/cpp/language/value_category.html</a></p>
+<p>Если сильно не углубляться, то: <code>lvalue</code> это именованные
+объекты, кроме случаев когда их явным образом превратили в
+<code>rvalue</code>. <code>rvalue</code> это все безымянные объекты, а
+также именованные объекты, превращенные в <code>rvalue</code></p>
+<p><code>lvalue</code> превращенное в <code>rvalue</code> называется
+<code>xvalue</code> (eXpiring) т.е. те, которым жить осталось
+недолго.</p>
+<p>В коде <code>rvalue</code> обозначается через <code>&amp;&amp;</code>
+Для преобразования из <code>lvalue</code> в <code>rvalue</code>
+используется функция <code>std::move</code> - которая, по сути, просто
+приведение. Т.е. <code>move</code> сам ничего и никуда не перемещает, а
+просто помечает значение как временное (можно грабить корованы). После
+чего компилятор тоже ничего и никуда не перемещает, а просто вызывает
+оператор или конструктор, которые принимают объект соответствующей
+категории.</p>
+<p>Т.е.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Type a<span class="op">;</span> <span class="co">// переменная на стеке</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Type<span class="op">*</span> b <span class="op">=</span> <span class="op">&amp;</span>a<span class="op">;</span> <span class="co">// указатель</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Type<span class="op">&amp;</span> c<span class="op">{</span>a<span class="op">};</span> <span class="co">// ссылка</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Type<span class="op">&amp;&amp;</span> d <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span>a<span class="op">);</span> <span class="co">// rvalue ссылка, разрешающая &quot;отобрать&quot; ресурсы </span></span></code></pre></div>
+<p>Теперь дело за малым. C++ позволяет определить конструктор и оператор
+присваивания, принимающие на вход rvalue ссылки. Когда мы принимаем
+объект по такой ссылке - мы знаем, что его данные можно просто отобрать.
+Объект нужно оставить в валидном состоянии.</p>
+<p><a
+href="https://en.cppreference.com/w/cpp/language/move_constructor.html">https://en.cppreference.com/w/cpp/language/move_constructor.html</a>
+<a
+href="https://en.cppreference.com/w/cpp/language/move_operator.html">https://en.cppreference.com/w/cpp/language/move_operator.html</a></p>
+<p>Вместе с операциями из правила трех эти ребята образуют правило пяти.
+Если класс владеет ресурсами и определена хоть одна из операций
+(деструктор, операторы/конструкторы копирования/перемещения) - скорее
+всего нужно определить все пять.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    SimpleArray<span class="op">(</span>SimpleArray<span class="op">&lt;</span>T<span class="op">&gt;&amp;&amp;</span> other<span class="op">)</span> <span class="kw">noexcept</span> <span class="op">:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        <span class="va">memory_</span><span class="op">{</span>other<span class="op">.</span><span class="va">memory_</span><span class="op">},</span> <span class="co">// данные забираем себе</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">size_</span><span class="op">{</span>other<span class="op">.</span><span class="va">size_</span><span class="op">}</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        cout <span class="op">&lt;&lt;</span> <span class="st">&quot;constructor move&quot;</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        other<span class="op">.</span><span class="va">memory_</span> <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span> <span class="co">// объекту оставляем nullptr</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        other<span class="op">.</span><span class="va">size_</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    SimpleArray<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span>SimpleArray<span class="op">&lt;</span>T<span class="op">&gt;&amp;&amp;</span> other<span class="op">)</span> <span class="kw">noexcept</span> <span class="op">{</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span><span class="kw">this</span> <span class="op">==</span> <span class="op">&amp;</span>other<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        cout <span class="op">&lt;&lt;</span> <span class="st">&quot;operator move&quot;</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="kw">delete</span><span class="op">[]</span> <span class="va">memory_</span><span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">memory_</span> <span class="op">=</span> other<span class="op">.</span><span class="va">memory_</span><span class="op">;</span> <span class="co">// данные забираем себе</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">size_</span> <span class="op">=</span> other<span class="op">.</span><span class="va">size_</span><span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        other<span class="op">.</span><span class="va">memory_</span> <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span> <span class="co">// объекту оставляем nullptr</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        other<span class="op">.</span><span class="va">size_</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code></pre></div>
+<p>Теперь, во-первых, пример из части 2.5 не приводит к копированию:</p>
+<pre><code>create array_4
+create array_5
+create array_6
+create array_7
+constructor move</code></pre>
+<p>Во-вторых, мы сами можем перемещать данные из одного объекта в
+другой, скастовав значение из <code>lvalue</code> в
+<code>rvalue</code>:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    SimpleArray<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> array_1<span class="op">(</span><span class="dv">100</span><span class="op">);</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    SimpleArray<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> array_2<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="st">&quot;array_1 size : &quot;</span> <span class="op">&lt;&lt;</span> array_1<span class="op">.</span>size<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="st">&quot;array_2 size : &quot;</span> <span class="op">&lt;&lt;</span> array_2<span class="op">.</span>size<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    array_2 <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span>array_1<span class="op">);</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="st">&quot;array_1 size : &quot;</span> <span class="op">&lt;&lt;</span> array_1<span class="op">.</span>size<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="st">&quot;array_2 size : &quot;</span> <span class="op">&lt;&lt;</span> array_2<span class="op">.</span>size<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span></code></pre></div>
+<p>Вывод:</p>
+<pre><code>array_1 size : 100
+array_2 size : 1
+operator move
+array_1 size : 0
+array_2 size : 100</code></pre>
+<p>В-третьих, удалив оператор и конструктор копирования можно вообще
+сделать “movable only” объект. На этом основан
+<code>std::unique_ptr</code>.</p>
+<p>Ну и в-четвертых - move семантика это довольно простая и элегантная
+штука для работы с ресурсами в c++.</p>
+<p>Полный код примера: <a
+href="https://gist.github.com/bakineugene/4d493b8ad4f3f189bcfb5247a43544b1/eba414f9c5fecfec10d08eab95962841a6030ddc">https://gist.github.com/bakineugene/4d493b8ad4f3f189bcfb5247a43544b1/eba414f9c5fecfec10d08eab95962841a6030ddc</a></p>
+<p>#cpp #memory #move_semantics</p>
+</body>
+</html>

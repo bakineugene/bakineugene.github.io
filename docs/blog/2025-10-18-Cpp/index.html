@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2025-10-18" />
+  <title>Cpp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cpp</h1>
+<p class="author">Eugene</p>
+<p class="date">2025-10-18</p>
+</header>
+<p><em>16:08</em><br />
+Закончился первый модуль курса по C++ от Яндекс.Практикум</p>
+<p><a
+href="https://practicum.yandex.ru/cpp/">https://practicum.yandex.ru/cpp/</a></p>
+<p>Сначала думал, что будет слишком легко и надо было сразу брать
+продвинутый, но нагрузка оказалась приличной. Вместе с работой едва
+успевал (даже сюда писать перестал), но за дедлайн не вышел</p>
+<p>Первый модуль занимает 2.5 месяца + неделя каникул Темы: Весь базовый
+синтаксис + перегрузка функций и операторов, constexpr, шаблоны, лямбды,
+базовые STL контейнеры и алгоритмы, исключения + совсем немного по
+паттернам и тестам</p>
+<p>Кроме того, один спринт отводится на изучение Qt (<a
+href="https://doc.qt.io/">https://doc.qt.io/</a>)</p>
+<p>От Qt у людей пригорает, потому что мало того что тебе дают изучать
+язык, так еще и сверху Qt, у которого все свое (своя имплементация
+строк, контейнеров, итераторов, etc). Меня лично бесила необходимость
+рисовать интерфейсы</p>
+<p>Но как первый фреймворк для изучения — он очень хорош. Batteries
+included, куча модулей на любой вкус и цвет</p>
+<p>Работа с UI в Qt немного не в тренде. Вместо декларативного подхода
+все еще используется императивный, или, как вариант, можно накликать
+интерфейс в конструкторе</p>
+<p>Собирается все без проблем и под Linux, и под Windows. Вроде как даже
+под Android можно собрать приложеньку, хотя с ходу я не понял как</p>
+<p>Для установки под Windows придется пройти квест или купить VPN,
+потому что Qt не хочет обслуживать людей из РФ. А под Ubuntu просто sudo
+apt-get install qt6-base-dev qtcreator</p>
+<p>#cpp #qt</p>
+<hr />
+<p><em>23:34</em><br />
+Как результат первого модуля написал на Qt простенькое приложение-тренер
+для занятий йогой (ну и чем угодно на самом деле). Таких немало в google
+play store, но там реклама. Поэтому почему бы не написать свое в
+качестве упражнения</p>
+<p><a
+href="https://github.com/bakineugene/yogapp">https://github.com/bakineugene/yogapp</a></p>
+<p>Набор упражнений задается через класс YogaSequence (<a
+href="https://github.com/bakineugene/yogapp/blob/main/yogasequence.h">https://github.com/bakineugene/yogapp/blob/main/yogasequence.h</a>).
+Само упражнение задается через пару
+<code>using YogaPose = std::pair&lt;std::string, int&gt;</code>,
+определяющую название (для путей к ассетам) и время на упражнение</p>
+<p>На классе определены методы переключения вперед и назад по
+упражнениям. Упражнение переключится автоматически если выполнено два
+условия — закончило звучать звуковое сопровождение И истекло время на
+упражнение</p>
+<p>Текущий элемент определен через итератор. Мне почему-то очень
+понравились итераторы — в C++ это основной инструмент работы с
+коллекциями. С помощью итератора можно перемещаться по коллекции, а
+также получить текущий объект разыменованием <code>*iterator</code> (да,
+как с указателями). Но у них есть минус — итератор может «протухнуть», и
+пользователь об этом узнает только попытавшись разыменовать. Так что
+разбрасываться итераторами нельзя — ими может безопасно пользоваться
+только тот, кто владеет коллекцией (AFAIK)</p>
+<p>Класс окошка (<a
+href="https://github.com/bakineugene/yogapp/blob/main/mainwindow.cpp">https://github.com/bakineugene/yogapp/blob/main/mainwindow.cpp</a>)
+реализует работу таймера, плеера и отрисовки изображений</p>
+<p>player:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>   <span class="va">player_</span><span class="op">.</span>setAudioOutput<span class="op">(&amp;</span><span class="va">audio_output_</span><span class="op">);</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">connect</span><span class="op">(&amp;</span><span class="va">player_</span><span class="op">,</span> <span class="op">&amp;</span><span class="ex">QMediaPlayer::mediaStatusChanged</span><span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>            <span class="kw">this</span><span class="op">,</span> <span class="op">&amp;</span>MainWindow<span class="op">::</span>OnPlayerFinish<span class="op">);</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   <span class="va">player_</span><span class="op">.</span>setSource<span class="op">(</span><span class="ex">QUrl</span><span class="op">{</span>path<span class="op">});</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>   <span class="va">player_</span><span class="op">.</span>play<span class="op">();</span></span></code></pre></div>
+<p>timer:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    <span class="fu">connect</span><span class="op">(&amp;</span><span class="va">timer_</span><span class="op">,</span> <span class="op">&amp;</span><span class="ex">QTimer::timeout</span><span class="op">,</span> <span class="kw">this</span><span class="op">,</span> <span class="op">&amp;</span>MainWindow<span class="op">::</span>OnTimer<span class="op">);</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">timer_</span><span class="op">.</span>setInterval<span class="op">(</span>pose<span class="op">.</span>second<span class="op">);</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">timer_</span><span class="op">.</span>start<span class="op">();</span></span></code></pre></div>
+<p>Функция <code>connect</code> подписывает коллбек/хендлер (например
+OnTimer) на событие (например timeout). Так бы сказали фронтендеры. Но в
+Qt придумали свои названия — OnTimer это «слот», а timeout это «сигнал».
+Не то чтобы очень важно, но интересно, что тут совсем другая
+терминология</p>
+<p>Картинки нарисовала Алиса, а текст озвучил яндексовый спичкит.</p>
+<p>#cpp #qt #yoga</p>
+<hr />
+<p><em>23:36</em></p>
+<p><a
+href="(File%20exceeds%20maximum%20size.%20Change%20data%20exporting%20settings%20to%20download.)">Video:
+(File exceeds maximum size. Change data exporting settings to
+download.)</a></p>
+<hr />
+<p><em>23:36</em></p>
+<figure>
+<img src="images/photo_39@18-10-2025_23-36-43.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>16:50</em><br />
+Интересную методику прочел про “промптинг” для ИИ.</p>
+<p>Мета-промпт (<a
+href="https://www.gptunnel.ru/en/guide/meta-prompting">https://www.gptunnel.ru/en/guide/meta-prompting</a>)</p>
+<p>Вместо того, чтобы сочинять промпт - можно сочинить промпт, чтобы ИИ
+сам сочинил промпт 🤣</p>
+<pre><code># Роль
+Старший разработчик.
+
+#Контекст
+Собираешься выполнить задачу по разработке бота для телеграм и воспользоваться для этой цели ИИ.
+
+# Задача
+Создать простой телеграм-бот для управления таймерами.
+
+# Технические требования
+Язык программирования: Python 3.11.
+Библиотека: aiogram (для работы с Telegram API).
+
+# Функциональность
+Команда /timer 10m — запускает таймер на 10 минут и отвечает «Таймер на 10 минут установлен».
+Команда /cancel — отменяет активный таймер и отвечает «Таймер отменён».
+По истечении времени бот автоматически пишет «Время вышло!».
+
+# Ограничения
+таймеры должны храниться в памяти (без использования базы данных).
+
+# Задача
+Составь промпт для ИИ бота в XML формате чтобы получить желаемый результат</code></pre>
+<p>XML формат - тоже интересный элемент. Так финальный промпт легче
+копировать</p>
+<p>Ну и, кстати, с написанием бота справилась даже Алиса/YandexGPT, хотя
+по моим субъективным оценкам она пока не дотягивает до deepseek/qwen</p>
+<p>Бота можно тут потрогать, пока я его не снес <span class="citation"
+data-cites="bakin_test_bot">@bakin_test_bot</span></p>
+<p>P.S. Хотя даже в такой задаче ИИ сумел накосячить, но хоть как-то
+работает 🤣</p>
+<p>#ai #telegram</p>
+<hr />
+<p><em>22:50</em><br />
+Разбираюсь с кодом инициализации stm32 (форкнул репозиторий из поста
+выше <a
+href="https://github.com/bakineugene/stm32-blink/">https://github.com/bakineugene/stm32-blink/</a>)</p>
+<ol type="1">
+<li>Есть datasheet, а есть reference manual. В частности для STM32F103xx
+(STM32F103C6, STM32F103C8, STM32F103CB) нужен reference manual
+RM0008.</li>
+</ol>
+<pre><code>This reference manual targets application developers. It provides complete information on how to use the STM32F101xx, STM32F102xx, STM32F103xx and STM32F105xx/STM32F107xx microcontroller memory and peripherals.</code></pre>
+<p>Т.е. для разработки нужен RM, а за какой-то спецификой RM посылает в
+datasheet конкретной модели.</p>
+<ol start="2" type="1">
+<li>вот эти адреса, что указаны в <code>linker.ld</code></li>
+</ol>
+<pre><code>MEMORY
+{
+  FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 32K
+  RAM (xrw)  : ORIGIN = 0x20000000, LENGTH = 10K
+}</code></pre>
+<p>Они указаны в разделе memory map в даташите конкретной модели. На
+скриншоте можно найти данные для STM32F103C6</p>
+<ol start="3" type="1">
+<li>Все начинается с инициализации периферии</li>
+</ol>
+<pre><code>The STM32F103x4 and STM32F103x6 performance line family incorporates the high-performance ARM® Cortex™-M3 32-bit RISC core operating at a 72 MHz frequency, high-speed embedded memories (Flash memory up to 32 Kbytes and SRAM up to 6 Kbytes), and an extensive range of enhanced I/Os and peripherals connected to two APB buses. All devices offer two 12-bit ADCs, three general purpose 16-bit timers plus one PWM timer, as well as standard and advanced communication interfaces: up to two I2Cs and SPIs, three USARTs, an USB and a CAN.</code></pre>
+<p>Периферия - это все, что не память и CPU. GPIO порты, таймеры, ADC,
+i2c, spi, usart и вообще все встроенное в чип, что может предложить
+конкретная модель stm32.</p>
+<p>Вся периферия подключена через шины AHB и APB. Первая Advanced
+High-Performance Bus, вторая Advanced Peripheral Bus.</p>
+<p>Для того чтобы работать с каким-то элементом периферии - его нужно
+настроить. Как минимум включить. По умолчанию все выключено. Включить
+периферию - означает “затактировать” ее. Т.е. начать подавать на нее
+тактирующие импульсы. После чего можно настроить работу самой
+периферии.</p>
+<ol start="4" type="1">
+<li>Memory Map</li>
+</ol>
+<p>Для настройки мы обращаемся к некоторым блокам памяти, называемым
+регистрами. В STM32 регистры периферии обычно имеют размер 32 бита.</p>
+<p>Регистры объединены в логические блоки. Начало каждого блока
+регистров (его адрес) можно найти в разделе <code>3.3 Memory map</code>
+документа RM0008.</p>
+<p>Например для настройки тактирования периферии используется блок
+регистров RCC (<code>0x40021000</code> -
+<code>Reset and clock control</code>).</p>
+<p>Пожалуй все на сегодня.</p>
+<p>#stm32 #cmsis</p>
+<hr />
+<p><em>22:51</em></p>
+<figure>
+<img src="images/photo_40@19-10-2025_22-51-59.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>22:52</em></p>
+<figure>
+<img src="images/photo_41@19-10-2025_22-52-00.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>22:52</em></p>
+<hr />
+<p><em>22:52</em></p>
+<hr />
+<p><em>12:40</em><br />
+Идем дальше</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define RCC_BASE </span><span class="bn">0x40021000</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define RCC_APB2ENR </span><span class="op">*(</span><span class="dt">volatile</span><span class="pp"> </span><span class="dt">uint32_t</span><span class="pp"> </span><span class="op">*)(</span>RCC_BASE<span class="pp"> </span><span class="op">+</span><span class="pp"> </span><span class="bn">0x18</span><span class="op">)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define RCC_IOPCEN </span><span class="op">(</span><span class="dv">1</span><span class="pp"> </span><span class="op">&lt;&lt;</span><span class="pp"> </span><span class="dv">4</span><span class="op">)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>RCC_APB2ENR <span class="op">|=</span> RCC_IOPCEN<span class="op">;</span></span></code></pre></div>
+<p>Откуда взялся RCC_BASE - уже понятно.</p>
+<p>Поскольку задача - мигать встроенным в BluePill светодиодом (GPIOC
+13), а GPIOx подключены к APB2 - нам нужен регистр управления
+тактированием для APB2 - называется RCC_APB2ENR.</p>
+<p>Как видно тут можно сконфигурировать 5 портов - A, B, C, D, E. Но на
+самой blue pill светодиод подписан как PC13. Так понимаем, что он
+относится к порту C.</p>
+<p>С этой схемы мы берем и 0x18 адрес регистра в блоке и смещение 4 для
+IOPC_EN</p>
+<p>Переключая IOPC_EN в 1 - включаем тактирование для GPIOC порта</p>
+<p>#stm32 #cmsis <img src="images/photo_42@20-10-2025_12-40-50.jpg"
+alt="Photo" /></p>
+<hr />
+<p><em>23:09</em><br />
+Добрались до регистров, работающих с пинами.</p>
+<p><strong>CRL, CRH</strong> (Configuration Register Low/High) Первый
+отведен под конфигурацию для пинов с 0 по 7, второй для пинов с 8 по
+15</p>
+<p>Позволяет задать MODE (режим)</p>
+<pre><code>00: Input mode (reset state)
+01: Output mode, max speed 10 MHz.
+10: Output mode, max speed 2 MHz.
+11: Output mode, max speed 50 MHz.</code></pre>
+<p>Еще два бита позволяют задать конфигурацию</p>
+<pre><code>Для выхода (Output):
+00: Push-Pull - можем подтянуть к земле/питанию
+01: Open-Drain можем подтянуть к земле/подвесить в воздухе</code></pre>
+<p>Таким образом здесь (<a
+href="https://github.com/bakineugene/stm32-blink/blob/master/blinky-no-lib/src/main.c">https://github.com/bakineugene/stm32-blink/blob/master/blinky-no-lib/src/main.c</a>)</p>
+<p>Мы берем адрес блока регистров GPIOC из таблицы (0x40011000)
+Добавляем оффсет для GPIOx_CRH (0x04) CRH - т.к. там лежат настройки 13
+пина</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>GPIOC_CRH <span class="op">&amp;=</span> <span class="bn">0xFF0FFFFF</span><span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>GPIOC_CRH <span class="op">|=</span> <span class="bn">0x00200000</span><span class="op">;</span></span></code></pre></div>
+<p><code>0x2 == 0b0011</code> <code>00 == push-pull</code>
+<code>11 == выход, частота 50 МГц</code></p>
+<p>И устанавливаем для 13 пина режим “выход” + push-pull. Для целей
+мигания светодиодом подойдет любой из “выходных” режимов.</p>
+<p>#stm32 #cmsis <img src="images/photo_43@20-10-2025_23-09-02.jpg"
+alt="Photo" /></p>
+<hr />
+<p><em>23:09</em></p>
+<figure>
+<img src="images/photo_44@20-10-2025_23-09-02.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>23:34</em><br />
+Ну и еще два интересных порта (хотя для мигания на самом деле один)</p>
+<pre><code>Port input data register (GPIOx_IDR) (x=A..G) Address offset: 0x08h
+Bits 15:0 IDRy[15:0]: Port input data (y= 0..15)
+
+Port output data register (GPIOx_ODR) (x=A..G) Address offset: 0x0C
+Bits 15:0 ODRy[15:0]: Port output data (y=0..15)</code></pre>
+<p>IDR - для чтения (input) ODR - для записи (output)</p>
+<p>Для мигания мы используем 13 бит “выходного” регистра.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GPIOC_ODR </span><span class="op">*(</span><span class="dt">volatile</span><span class="pp"> </span><span class="dt">uint32_t</span><span class="pp"> </span><span class="op">*)(</span><span class="pp">GPIOC_BASE </span><span class="op">+</span><span class="pp"> </span><span class="bn">0x0C</span><span class="op">)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GPIOC13 </span><span class="op">(</span><span class="dv">1</span><span class="bu">UL</span><span class="pp"> </span><span class="op">&lt;&lt;</span><span class="pp"> </span><span class="dv">13</span><span class="op">)</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>GPIOC_ODR <span class="op">|=</span> GPIOC13<span class="op">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">500000</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="op">;</span> <span class="co">// arbitrary delay</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>GPIOC_ODR <span class="op">&amp;=</span> <span class="op">~</span>GPIOC13<span class="op">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">500000</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="op">;</span> <span class="co">// arbitrary delay</span></span></code></pre></div>
+<p>Итого: платка опять мигает как и в прошлый раз. Но теперь я понимаю
+что там происходит. Так что теперь я залил ту же прошивку, но с
+уважением =)</p>
+<p>#stm32 #cmsis <a
+href="(File%20exceeds%20maximum%20size.%20Change%20data%20exporting%20settings%20to%20download.)">Video:
+(File exceeds maximum size. Change data exporting settings to
+download.)</a></p>
+<hr />
+<p><em>23:35</em></p>
+<hr />
+<p><em>12:25</em><br />
+Следующий шаг - SPL (Standard Peripheral Library)</p>
+<p>В каком-то виде можно найти на гитхабе, но там структура немного
+отличается <a
+href="https://github.com/dcmde/stm32f103_spl">https://github.com/dcmde/stm32f103_spl</a>
+<a
+href="https://github.com/Derppening/stm32f103">https://github.com/Derppening/stm32f103</a></p>
+<p>Можно пройти квест с VPN и регистрацией и скачать у ST</p>
+<p><a
+href="https://www.st.com/en/embedded-software/stsw-stm32054.html#get-software">https://www.st.com/en/embedded-software/stsw-stm32054.html#get-software</a></p>
+<p>#stm32 #spl #stm32f10x <img
+src="images/photo_45@21-10-2025_12-25-02.jpg" alt="Photo" /></p>
+<hr />
+<p><em>12:55</em><br />
+Discovering the STM32 Microcontroller</p>
+<p>Достаточно глубокая, но доступная книга по SPL для STM32F1xx.
+Примечательно использование GNU Linux тулчейна.</p>
+<hr />
+<p><em>11:43</em><br />
+Хотя прошлые посты я пометил как #cmsis - оказалось, что это не совсем
+корректно.</p>
+<p>CMSIS это набор стандартов для разработки кода под Cortex-M
+микроконтроллеры (<a
+href="https://www.arm.com/technologies/cmsis">https://www.arm.com/technologies/cmsis</a>).</p>
+<p>Т.е. включает в себя в том числе и набор инструментов для бутстрапа
+(<a
+href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/README.md">https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/README.md</a>)</p>
+<p>Со стороны ST есть как адаптация армового репозитория под нужды stm32
+(<a
+href="https://github.com/STMicroelectronics/cmsis-core">https://github.com/STMicroelectronics/cmsis-core</a>)
+Так и наборы “расширений” для конкретных семейств микроконтроллеров</p>
+<p>Эти репозитории могут как использоваться самостоятельно, так и в
+рамках более масштабного иструмента под названием Stm32Cube (<a
+href="https://github.com/STMicroelectronics/STM32CubeF1">https://github.com/STMicroelectronics/STM32CubeF1</a>)</p>
+<p>Конкретно cmsis репозитории (<a
+href="https://github.com/STMicroelectronics/cmsis-device-f1">https://github.com/STMicroelectronics/cmsis-device-f1</a>)
+содержат: 1. Скрипт для линкера 2. Ассемблерный код для инициализации
+микроконтроллера 3. C код инициализации 4. Макросы и определения с
+адресами блоков регистров, регистров и бит</p>
+<p>#cmsis #stm32 <img src="images/photo_46@22-10-2025_11-43-57.jpg"
+alt="Photo" /></p>
+</body>
+</html>

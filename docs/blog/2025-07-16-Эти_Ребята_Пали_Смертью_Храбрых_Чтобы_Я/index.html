@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2025-07-16" />
+  <title>Эти Ребята Пали Смертью Храбрых Чтобы Я</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Эти Ребята Пали Смертью Храбрых Чтобы Я</h1>
+<p class="author">Eugene</p>
+<p class="date">2025-07-16</p>
+</header>
+<p><em>10:17</em> Эти ребята пали смертью храбрых, чтобы я что-нибудь
+понял про линейный стабилизатор</p>
+<p>Press F <img src="images/photo_27@16-07-2025_10-17-32.jpg"
+alt="Photo" /></p>
+<hr />
+<p><em>21:34</em><br />
+#electronics</p>
+<p>В рамках курса по электронике собрал линейный стабилизатор напряжения
+на pnp транзисторе 2n5401 и стабилитроне 5.5 В</p>
+<p>Напряжение на вход подавал от 10 до 12 В + синус, на выходе держится
+от 4.8 до 4.9 В (5.5 - 0.7 В)</p>
+<p>В симуляции почему-то менее красиво все, чем показывает мой
+осциллограф</p>
+<p>В easy EDA сходу не нашел стабилитрон с нужными мне параметрами.
+Поэтому воткнул 8.4 В. <img
+src="images/photo_28@16-07-2025_21-34-06.jpg" alt="Photo" /></p>
+<hr />
+<p><em>21:34</em></p>
+<figure>
+<img src="images/photo_29@16-07-2025_21-34-06.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>21:34</em></p>
+<figure>
+<img src="images/photo_30@16-07-2025_21-34-06.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>21:34</em></p>
+<figure>
+<img src="images/photo_31@16-07-2025_21-34-06.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>10:49</em><br />
+#electronics #transistor</p>
+<p>Как это работает.</p>
+<p>Стабилитрон - диод на котором падает заданное природой и
+производителем напряжение при пробое. Т.е. в данном случае он либо
+заперт, либо на нем падает 5.6В, третьего не дано.</p>
+<p>Стабилитрон, таким образом, фиксирует напряжение на базе транзистора.
+U_,b = 12 - 5.6 = 6.4 В</p>
+<p>У PNP транзистора на переходе эмиттер-база - также “стоит диод”,
+включенный напрямую. Он также или закрыт (тогда и весь транзистор
+закрыт) или на нем падает 0.6 - 0.7В.</p>
+<p>На эмиттере напряжение должно быть выше, чем на базе - следовательно
+тут прибавляем U_e = 6.4 В + 0.7 В = 7.1 В</p>
+<p>Итоговое падение напряжения на нагрузке получилось U_n = 12 - 7.1 =
+4.9 В</p>
+<p>Поскольку падение на стабилитроне и переходе ЭБ не меняются -
+напряжение на нагрузке также будет оставаться постоянным (5.6 - 0.7 =
+4.9 В). Меняется только сопротивление самого транзистора. <img
+src="images/photo_32@17-07-2025_10-49-55.jpg" alt="Photo" /></p>
+</body>
+</html>

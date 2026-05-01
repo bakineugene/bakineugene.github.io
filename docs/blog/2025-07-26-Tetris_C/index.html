@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2025-07-26" />
+  <title>Tetris C</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Tetris C</h1>
+<p class="author">Eugene</p>
+<p class="date">2025-07-26</p>
+</header>
+<p><em>14:30</em><br />
+#tetris_c #avr</p>
+<p>Решения было два - либо “нарисовать” границу физически на экране,
+либо программно. Второй вариант осложняется тем, что матрицы не
+позволяют регулировать силу свечения отдельных пикселей.</p>
+<p>Идея заключалась в том, чтобы “мигать” пикселями достаточно быстро,
+чтобы казалось, что они горят в пол силы.</p>
+<p>Заход в лоб был - обновлять экран прямо в прерывании. Что, как
+оказалось, плохая затея. В итоге код “моргания” был перенесен в функцию
+задержки.</p>
+<p>Решение оказалось далеко не идеальным. Сложно подобрать все так,
+чтобы мерцания видно не было. В некоторых случаях экран моргал так, что,
+полагаю, можно вызвать эпилепсию. В итоге подобрал более-менее пригодные
+параметры.</p>
+<p>На видео моргания не видно, сниженную яркость не заметно. В живую
+чуть хуже по морганию и чуть лучше по яркости.</p>
+<p>Для sdl2 версии - нарисовал строительную ленту.</p>
+<p><a
+href="https://github.com/bakineugene/tetris_c/commit/48c4542721c49a8258e5aa49973532bee05b6389">https://github.com/bakineugene/tetris_c/commit/48c4542721c49a8258e5aa49973532bee05b6389</a>
+<a
+href="https://github.com/bakineugene/tetris_c/commit/205df91dee852af04335cbeeaa191876d8c6f503">https://github.com/bakineugene/tetris_c/commit/205df91dee852af04335cbeeaa191876d8c6f503</a>
+<a href="videos/tetris_walls_avr.mp4">Video:
+videos/tetris_walls_avr.mp4</a></p>
+<hr />
+<p><em>14:30</em></p>
+<p><a href="videos/tetris_walls_sdl2.mp4">Video:
+videos/tetris_walls_sdl2.mp4</a></p>
+<hr />
+<p><em>12:58</em><br />
+#openscad #3dprinting</p>
+<p><a
+href="https://github.com/bakineugene/tetris_c/commit/b5255109d299202b57873f7449b959c477de1aba">https://github.com/bakineugene/tetris_c/commit/b5255109d299202b57873f7449b959c477de1aba</a></p>
+<p>Расчехлил 3д принтер после длительного простоя. Раньше использовал
+слайсер <a href="https://slic3r.org/">https://slic3r.org/</a>, но после
+смены компьютера растерял все свои настройки (Ender 3 v1). А с
+дефолтными он печатает очень плохо. Раз уж такое дело - решил
+попробовать новые слайсеры, Slic3r уже давно не обновлялся. Выбор пал на
+PrusaSlicer <a
+href="https://www.prusa3d.com/page/prusaslicer_424/">https://www.prusa3d.com/page/prusaslicer_424/</a>
+и он из коробки (есть настройки для многих принтеров) печатает гораздо
+лучше, чем печатало со всеми моими настройками ранее. А также некоторые
+косяки Slic3r’а поправили.</p>
+<p>Для разогрева напечатал примерочную “посадочную площадку” под одну из
+малых плат max7219 <img src="images/photo_33@27-07-2025_12-58-58.jpg"
+alt="Photo" /></p>
+<hr />
+<p><em>12:58</em></p>
+<figure>
+<img src="images/photo_34@27-07-2025_12-58-58.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+</body>
+</html>

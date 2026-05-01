@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2025-08-16" />
+  <title>Ground Loop</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Ground Loop</h1>
+<p class="author">Eugene</p>
+<p class="date">2025-08-16</p>
+</header>
+<p><em>21:22</em><br />
+TIL про земляные петли. Правда еще не уверен, что все понял.</p>
+<p>История такая.</p>
+<p>Захотел я себе прикупить древний квадратный монитор, которые сейчас
+можно почти за бесценок взять с рук.</p>
+<p>При покупке проверил - все ок.</p>
+<p>Приношу домой, втыкаю (через дешевый конвертер HDMI to VGA) - на
+экране рябь. Расстроился, начал искать причину. От VGA без конвертера
+монитор работает без ряби (но целевой ноутбук без VGA). От другого
+компьютера через переходник работает без ряби. Значит, вроде как,
+виноват целевой ноутбук, для которого монитор покупался.</p>
+<p>Начинаю исследовать из-за чего. Подключаю ноутбук к телевизору через
+HDMI (без переходника) - ряби нет. Получается ноутбук обратно не
+виноват. Тащу обратно - подключаю к монитору - ряби нет 🤨</p>
+<p>Ок, подключаю к БП - рябь появилась обратно 😭</p>
+<p>Значит, решил я, что-то не так с питанием. Подключил через другой БП
+(“псевдо-лабораторник”) - рябь стала меньше, но не ушла совсем. Тут у
+меня возникла гипотеза, что питание от БП как-то влияет на питание
+конвертера и из-за этого все беды. Решил запитать конвертер напрямую от
+батарейки с линейным преобразователем.</p>
+<p>Откусил питание, припаял проводки - для проверки подключаю 5в
+источник - все работает, но все равно с рябью. Отключаю питание ноутбука
+- картинка пропадает, подключаю - повяляется. Тут я пришел к выводу, что
+“землю” я откусил зря и теперь земля для сигнальной части теряется когда
+я отключаю питание ноутбука. 🫠 Подключаю землю обратно, откушен только
+5в. Подключаю “батарейку”… и вообще никакого полезного эффекта. Рябь на
+месте. Т.е. стабильные 5в не помогли.</p>
+<p>Тут я зачем-то решил подключить монитор через ЛАТР. И рябь пропала…
+Вместо ЛАТРа воткнул китайский переходник без земельного контакта - ряби
+нет.</p>
+<p>Спросил ИИ - узнал про земляные петли. Не уверен, что это оно - но
+похоже на правду.</p>
+<p>#ground_loop</p>
+<hr />
+<p><em>21:23</em></p>
+<figure>
+<img src="images/photo_35@16-08-2025_21-23-21.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<hr />
+<p><em>21:23</em></p>
+<p><a href="videos/рябь.mp4">Video: videos/рябь.mp4</a></p>
+<hr />
+<p><em>08:30</em><br />
+<a
+href="https://electronics.stackexchange.com/questions/78079/why-is-this-laptop-adapter-grounded">https://electronics.stackexchange.com/questions/78079/why-is-this-laptop-adapter-grounded</a></p>
+<p>Чуть больше информации по “земляной петле”</p>
+<p>Во-первых про БП ноутбука: <a
+href="https://superuser.com/questions/461898/earthing-is-it-important-for-laptops/977605#977605">https://superuser.com/questions/461898/earthing-is-it-important-for-laptops/977605#977605</a></p>
+<p>Они бывают двух видов. Первого класса защиты и второго. БП первого
+класса защиты обязательно включать в розетку с заземлением. БП второго
+класса защиты можно включать без заземления.</p>
+<p>У меня БП первого класса. “Минус” БП притянут к земле в розетке, а
+соответственно к земле притянут и минус питания в HDMI разъеме.</p>
+<p>У монитора также есть “земляной” пин в вилке и корпус монитора
+заземлен, а также заземлен “экран” в VGA кабеле. Deepseek мамой
+клянется, что экран строго не должен быть соединен с “сигнальной”
+землей. Но в стандартах пока это найти не удалось.</p>
+<p>А в китайском переходнике есть вот такой интересный контакт между
+“экраном” и сигнальной землей. (см. картинку) Который вроде есть, но не
+распаян.</p>
+<p>И как должно быть по красоте - пока непонятно</p>
+<p>#ground_loop <img src="images/photo_36@17-08-2025_08-30-04.jpg"
+alt="Photo" /></p>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2025-12-14" />
+  <title>Stm32</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Stm32</h1>
+<p class="author">Eugene</p>
+<p class="date">2025-12-14</p>
+</header>
+<p><em>00:31</em><br />
+Сегодня в качестве эксперимента попробовал получить из HAL проекта
+одного семейства (F1) stm32 проект для другого семейства (G0) stm32
+простой заменой репозиториев hal и cmsis на соответствующие версии</p>
+<p>Фокус не особо удался. Все таки надо читать документацию 😅</p>
+<p>Во первых для G0 почему-то не положили скрипт линкера в cmsis Во
+вторых файлы с настройками все же существенно отличаются.</p>
+<p>Сгенерировал проект в cubemx и почистил по аналогии с предыдущим (<a
+href="https://github.com/bakineugene/stm32-g0-cubemx-hal-blink/">https://github.com/bakineugene/stm32-g0-cubemx-hal-blink/</a>)</p>
+<p>#stm32 #hal #cubemx <a
+href="videos/video_11@14-12-2025_00-31-25.mp4">Video:
+videos/video_11@14-12-2025_00-31-25.mp4</a></p>
+<hr />
+<p><em>17:10</em><br />
+Я обзавелся гирляндой для программистов.</p>
+<p>Типа такой: <a
+href="https://ozon.ru/t/8Ds9UT3">https://ozon.ru/t/8Ds9UT3</a></p>
+<p>К счастью сначала потренировался на небольших кусочках светодиодных
+лент, т.к. каким-то умудрился сжечь парочку светодиодов.</p>
+<p>В общем оно работает. Режимы работы пока придумываю. Среди вариантов
+обязательно должна быть сортировка. Где-то я видел такое видео 😂</p>
+<p>#ws2812 <a href="videos/video_12@14-12-2025_17-10-21.mp4">Video:
+videos/video_12@14-12-2025_17-10-21.mp4</a></p>
+<hr />
+<p><em>20:06</em><br />
+<a
+href="https://github.com/bakineugene/atmega_new_years_lights">https://github.com/bakineugene/atmega_new_years_lights</a></p>
+<p>В итоге, чтобы завести “огоньки” я воспользовался “гайверовской”
+библиотечкой “tinyLED” (<a
+href="https://github.com/GyverLibs/microLED">https://github.com/GyverLibs/microLED</a>)</p>
+<p>Ссылка на “microLED”, а внутри есть header only cpp библиотечка
+tinyLED (<a
+href="https://github.com/GyverLibs/microLED/blob/470f4f5a1aabb362cd584b7be62b6afc44fae37f/src/tinyLED.h">https://github.com/GyverLibs/microLED/blob/470f4f5a1aabb362cd584b7be62b6afc44fae37f/src/tinyLED.h</a>)</p>
+<p>Так я “внезапно” узнал, что у avr и arm тулзов под линукс есть не
+только C компилятор, но и C++ 😅</p>
+<p>Библиотечка изначально написана под Arduino, но с парой
+<code>#define</code> ее можно использовать без всякого ардуино.</p>
+<p>Немного замеров</p>
+<p>100 RGB LED светодиодов</p>
+<p>Белый цвет + “яркость 250/255” = 4.5 Ватт Желтый цвет + “яркость
+250/255” ~ 3.4 Ватт Желтый цвет + “яркость 150/255” ~ 1.8 Ватт “Радужный
+цвет” + “яркость 150/255” ~ 1.55 Ватт</p>
+<p>Ну и с “точностью” цветопередачи у данной гирлянды (или библиотеки)
+все не очень хорошо. Если врубать не на полную мощность - то цвет сильно
+“уходит в красный” и приходится уменьшать кол-во красного, чтобы цвет
+соответствовал задуманному.</p>
+<p>#ws2812 #avr #atmega</p>
+</body>
+</html>

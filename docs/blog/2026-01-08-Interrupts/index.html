@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eugene" />
+  <meta name="dcterms.date" content="2026-01-08" />
+  <title>Interrupts</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Interrupts</h1>
+<p class="author">Eugene</p>
+<p class="date">2026-01-08</p>
+</header>
+<p><em>20:55</em><br />
+<strong>STM32: исключения/прерывания</strong></p>
+<p>Работа с прерываниями для STM32F10xxx подробно описана в
+<code>PM0056 (Programming Manual)</code></p>
+<p>В доках stm32 есть более “общее” понятие чем прерывания - это
+исключения. Для разработчика я пока не вижу между ними большой разницы.
+Почти у любого исключения есть IRQn - идентификатор запроса на
+прерывание, почти все обрабатываются через
+<code>NVIC (Nested vectored interrupt controller)</code>. Для каждого
+есть место в таблице векторов исключений.</p>
+<p>К системным исключениям относятся: <code>Reset</code>,
+<code>NMI</code> - исключения из исключений. Не управляются NVIC
+<code>Hard fault</code>, <code>Memory management fault</code>,
+<code>Bus fault</code>, <code>Usage fault</code> - ошибки
+<code>SVCall</code>, <code>PendSV</code> - исключения для имплементации
+<code>RTOS</code> <code>SysTick</code> - исключение при срабатывании
+<code>SysTick</code> таймера. Базовый таймер в STM32.</p>
+<p>Все остальное это прерывания (<code>Interrupt</code> or
+<code>IRQ</code>). Это исключения, запрошенные периферией или
+пользовательским кодом. Предназначено для коммуникации периферии с
+процессором. Системные исключения имеют отрицательный IRQn и
+настраиваются через <code>SCB_XXXX</code> регистры, а периферийные
+исключения имеют положительный IRQn и настраиваются через
+<code>NVIC_XXXX</code> регистры.</p>
+<p><strong>Обработчики исключений</strong></p>
+<p>Адреса обработчиков исключений определены в таблице векторов
+исключений, которая задается в startup скрипте. Он поставляется с CMSIS,
+но можно и свой написать.</p>
+<p><a
+href="https://github.com/STMicroelectronics/cmsis-device-f1/blob/c8e9a4a4f16b6d2cb2a2083cbe5161025280fb22/Source/Templates/gcc/startup_stm32f103x6.s#L129">https://github.com/STMicroelectronics/cmsis-device-f1/blob/c8e9a4a4f16b6d2cb2a2083cbe5161025280fb22/Source/Templates/gcc/startup_stm32f103x6.s#L129</a></p>
+<p>Отрывок:</p>
+<pre><code>g_pfnVectors:
+...
+  .word PendSV_Handler
+  .word SysTick_Handler
+  .word WWDG_IRQHandler
+  .word PVD_IRQHandler
+  .word TAMPER_IRQHandler
+  .word RTC_IRQHandler
+  .word FLASH_IRQHandler
+  .word RCC_IRQHandler
+  .word EXTI0_IRQHandler
+  .word EXTI1_IRQHandler
+...</code></pre>
+<p>Для каждого обработчика определено имя имплементирующей его функции,
+которую необходимо написать разработчику.</p>
+<pre><code>  .weak SysTick_Handler
+  .thumb_set SysTick_Handler,Default_Handler</code></pre>
+<p>Если функции нет, а исключение прилетело - вместо нее подставляется
+бесконечный цикл.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@brief</span><span class="co">  This is the code that gets called when the processor receives an</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"> *         unexpected interrupt.  This simply enters an infinite loop, preserving</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"> *         the system state for examination by a debugger.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>Default_Handler<span class="op">:</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>Infinite_Loop<span class="op">:</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  b Infinite_Loop</span></code></pre></div>
+<p>Интересно, что можно определить несколько “таблиц векторов” и менять
+сразу весь набор хендлеров, записав оффсет до альтернативной таблицы в
+регистр <code>SCB_VTOR</code>.</p>
+<p><strong>Управление прерываниями</strong></p>
+<p>Практически идентично AVR</p>
+<p>Каждое исключение может быть в одном из состояний:
+<code>Inactive</code> - не активно и не запланировано
+<code>Pending</code> - запланировано для обработки. Определяется флагом
+в одном из регистров. <code>Active</code> - обрабатывается процессором
+прямщас <code>Active + Pending</code> - и обрабатывается и
+запланировано.</p>
+<p>Прерывания можно <strong>глобально включить/выключить</strong> по
+аналогии с sei()/cli() используя CMSIS функции:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> __disable_irq<span class="op">(</span><span class="dt">void</span><span class="op">)</span> <span class="co">// Disable Interrupts</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> __enable_irq<span class="op">(</span><span class="dt">void</span><span class="op">)</span> <span class="co">// Enable Interrupts</span></span></code></pre></div>
+<p>Конкретное <strong>прерывание можно включить/выключить</strong>
+используя специальные наборы регистров. Бит соответствует IRQn.</p>
+<p><code>NVIC_ISER[0..2] (Interrupt Set-Enable Register)</code> - Для
+включения прерывания
+<code>NVIC_ICER[0..2] (Interrupt Clear-Enable Register)</code> - Для
+выключения прерывания</p>
+<p>Также доступны CMSIS функции:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> NVIC_EnableIRQ<span class="op">(</span>IRQn_t IRQn<span class="op">)</span> <span class="co">// Enable IRQn</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> NVIC_DisableIRQ<span class="op">(</span>IRQn_t IRQn<span class="op">)</span> <span class="co">// Disable IRQn</span></span></code></pre></div>
+<p><strong>Pending</strong> состояние для прерываний управляется
+регистрами:
+<code>NVIC_ISPR[0..2] (Interrupt set-pending registers)</code> для
+установки pending
+<code>NVIC_ICPR[0..2] (Interrupt clear-pending registers)</code> для
+сброса pending
+<code>NVIC_STIR (Software Trigger Interrupt Register)</code> - Это
+отдельный регистр для программного вызова одного прерывания.</p>
+<p>Также доступны CMSIS функции:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> NVIC_SetPendingIRQ<span class="op">(</span>IRQn_t IRQn<span class="op">)</span> <span class="co">// Set IRQn pending</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> NVIC_ClearPendingIRQ<span class="op">(</span>IRQn_t IRQn<span class="op">)</span> <span class="co">// Clear IRQn pending status</span></span></code></pre></div>
+<p><strong>Активный статус</strong> можно посмотреть с помощью
+<code>NVIC_IABRx</code> - показывает какие прерывания обрабатываются
+(Active)</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">uint32_t</span> NVIC_GetActive <span class="op">(</span>IRQn_t IRQn<span class="op">)</span> <span class="co">//  Returns 1 for active, 0 for inactive</span></span></code></pre></div>
+<p>#interrupts #stm32</p>
+<hr />
+<p><em>20:55</em><br />
+Системные исключения управляются через отдельные регистры примерно так,
+как это сделано у AVR. Поэтому не вижу смысла пока в них
+закапываться.</p>
+<p>В принципе на данном уровне уже доступен тот же набор
+функциональности, что и AVR разработчику. Но NVIC также позволяет
+управлять приоритетами, а также разрешать/запрещать “прервать
+прерывание”. К этому я вернусь позже.</p>
+<p>P.S. Уперся в лимиты телеги 😢 Подключить что-ли премиум 🤔</p>
+<p>P.P.S. Премиум не дает писать больше 4096 символов 😕 Придется
+подружиться с сестрой таланта.</p>
+<p>#interrupts #stm32</p>
+</body>
+</html>
