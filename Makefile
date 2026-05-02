@@ -18,7 +18,7 @@ BLOG_INDEX_OUTPUT := src/index.md
 GENERATOR_SCRIPT := scripts/generate-blog-index.py
 
 # Default target
-all: $(CSS_DST) $(BLOG_INDEX_OUTPUT) $(OUT_HTML)
+all: $(CSS_DST) $(BLOG_INDEX_OUTPUT) $(OUT_HTML) media-copy
 
 # Generate blog index before building
 INSERT_SCRIPT := scripts/insert_blog_listing.py
@@ -39,9 +39,13 @@ docs/%.html: src/%.md | $(CSS_DST)
 	@mkdir -p $(dir $@)
 	pandoc $< -o $@ -s --css=$(CSS) --lua-filter=md-to-html-links.lua
 
+# Copy media files (images, videos, audio, etc.) preserving directory structure
+media-copy:
+	rsync -av --exclude='*.md' --exclude='*.template.md' src/ docs/
+
 # Clean
 clean:
 	rm -rf docs
 	rm -f $(BLOG_INDEX_OUTPUT)
 
-.PHONY: all clean
+.PHONY: all clean media-copy
