@@ -59,7 +59,6 @@ Welcome to my weblog. Here you'll find technical articles, project updates, and 
 - **30 May 2025**: [Electronics](blog/2025-05-30-Electronics/index.html) *by Eugene* *(tags: electronics, smart_dcdc)*
 - **27 May 2025**: [Tetris C](blog/2025-05-27-Tetris_C/index.html) *by Eugene* *(tags: tetris_c)* — *11:42* Имплементация вращения по правилам современного тетриса #tetris_c
 - **21 May 2025**: [Tetris C](blog/2025-05-21-Tetris_C/index.html) *by Eugene* *(tags: tetris_c)* — *23:22* Добавил управление элементами (кроме вращения) и исчезновение заполненных слоев Кроме того решил, что у меня будет 2*3 матрицы - то есть экран 16 * 24 Код, правда, уже нечитаемый, грядет чи...
-- **20 May 2025**: [Post from May 20, 2025](blog/2025-05-20-Post_from_May_20_2025/index.html) *by Eugene* *(tags: )* — *08:36* Чтобы не потерять --- *08:36* Запись семинара и быстрого старта ВК1921ВГ015. И немного материалов по контроллеру.
 - **18 May 2025**: [Tetris C](blog/2025-05-18-Tetris_C/index.html) *by Eugene* *(tags: tetris_c)* — *01:16* Цель - сделать несложную игрушку на микроконтроллере. В качестве первой \"жертвы\" выбрал \"тет...\"
 
 <!-- BLOG_POSTS_END -->
