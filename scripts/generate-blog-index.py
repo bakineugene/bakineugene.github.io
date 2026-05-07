@@ -124,7 +124,8 @@ def generate_blog_listing(blog_dir='src/blog'):
                 tags_str = ', '.join(post['tags'])
             else:
                 tags_str = str(post['tags'])
-            lines[-1] += f" *(tags: {tags_str})*"
+            if (len(tags_str) > 0):
+                lines[-1] += f" *(tags: {tags_str})*"
         if 'summary' in post:
             lines[-1] += f" — {post['summary']}"
     
