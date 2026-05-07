@@ -119,8 +119,6 @@ def generate_blog_listing(blog_dir='src/blog'):
         link = f"blog/{post['dirname']}/index.html"
         lines.append(f"- **{post['date']}**: [{post['title']}]({link})")
         # Optional: Add author/tags if available
-        if 'author' in post:
-            lines[-1] += f" *by {post['author']}*"
         if 'tags' in post and post['tags']:
             if isinstance(post['tags'], list):
                 tags_str = ', '.join(post['tags'])
