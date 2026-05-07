@@ -8,10 +8,12 @@ Generates markdown list in reverse chronological order
 import os
 import re
 import sys
+import locale
 from datetime import datetime
 
 def extract_date_title(dirname):
     """Extract date and title from directory name"""
+    locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
     pattern = r'^(\d{4})-(\d{2})-(\d{2})-(.+)$'
     match = re.match(pattern, dirname)
     if match:
