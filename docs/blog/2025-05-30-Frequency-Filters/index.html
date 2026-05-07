@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Eugene" />
   <meta name="dcterms.date" content="2025-05-30" />
-  <title>Electronics</title>
+  <title>Частотные фильтры</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -28,12 +28,11 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Electronics</h1>
+<h1 class="title">Частотные фильтры</h1>
 <p class="author">Eugene</p>
 <p class="date">2025-05-30</p>
 </header>
-<p><em>10:53</em><br />
-<a
+<p><a
 href="https://habr.com/ru/companies/selectel/articles/721558/">https://habr.com/ru/companies/selectel/articles/721558/</a></p>
 <p>Суть частотного фильтра - это делитель напряжения, в котором
 сопротивление одного из плеч зависит от частоты.</p>
@@ -43,62 +42,48 @@ C)</p>
 L</p>
 <p>В зависимости от того с какого из плеч снимаем напряжение - будем
 фильтровать низкие или высокие частоты</p>
-<p>#electronics</p>
-<hr />
-<p><em>23:21</em><br />
-<a
+<p><a
 href="https://dzen.ru/b/aAnY608UST3RVlE7">https://dzen.ru/b/aAnY608UST3RVlE7</a></p>
-<p>Про фильтры. В прошлый раз когда искал как преобразовать ШИМ сигнал в
-постоянный мне как раз попался на одном из форумов совет про RC фильтр.
+<p>В прошлый раз когда искал как преобразовать ШИМ сигнал в постоянный
+мне как раз попался на одном из форумов совет про RC фильтр.<br />
 Я сделал как написано - все заработало. Теперь еще раз то же самое, но с
 минимальными знаниями по теме.</p>
 <p>Есть стандартный ардуиновский ШИМ сигнал (<a
-href="https://gist.github.com/bakineugene/7bd84e991f221386652f8f96d734dd04">https://gist.github.com/bakineugene/7bd84e991f221386652f8f96d734dd04</a>)
+href="https://gist.github.com/bakineugene/7bd84e991f221386652f8f96d734dd04">https://gist.github.com/bakineugene/7bd84e991f221386652f8f96d734dd04</a>)<br />
 Его частота = 490 Гц.</p>
-<p>Нужно оставить только постоянную часть. Образуем делитель из
-конденсатора и резистора. Конденсатор 10 мкФ, а резистор нужно подобрать
-таким образом, чтобы сопротивление на конденсаторе было много меньше чем
-на резисторе.</p>
+<p>Нужно оставить только постоянную часть.<br />
+Образуем делитель из конденсатора и резистора.<br />
+Конденсатор 10 мкФ, а резистор нужно подобрать таким образом, чтобы
+сопротивление на конденсаторе было много меньше чем на резисторе.</p>
 <p>Т.е. чтобы вся переменная часть рассеивалась на резисторе.</p>
 <p>Вопрос только - много меньше, это сколько?</p>
 <p>Провел небольшой эксперимент. Чтобы получить примерно представление
-что к чему. При x20 - рябь еще видна При x75 - Практически ровный график
+что к чему.<br />
+При x20 - рябь еще видна<br />
+При x75 - Практически ровный график<br />
 При x150 - фильтр уже не успевает реагировать вовремя на изменение
 сигнала</p>
-<p>#electronics #smart_dcdc <a href="videos/pwm_3.mp4">Video:
-videos/pwm_3.mp4</a></p>
-<hr />
-<p><em>23:21</em></p>
+<p><a href="videos/pwm_3.mp4">Video: videos/pwm_3.mp4</a></p>
 <figure>
 <img src="images/photo_4@30-05-2025_23-21-03_3.jpg" alt="Photo" />
 <figcaption aria-hidden="true">Photo</figcaption>
 </figure>
-<hr />
-<p><em>23:21</em></p>
 <figure>
 <img src="images/photo_5@30-05-2025_23-21-03_3.jpg" alt="Photo" />
 <figcaption aria-hidden="true">Photo</figcaption>
 </figure>
-<hr />
-<p><em>23:21</em></p>
 <figure>
 <img src="images/photo_6@30-05-2025_23-21-03_3.jpg" alt="Photo" />
 <figcaption aria-hidden="true">Photo</figcaption>
 </figure>
-<hr />
-<p><em>23:21</em></p>
 <figure>
 <img src="images/photo_7@30-05-2025_23-21-03_3.jpg" alt="Photo" />
 <figcaption aria-hidden="true">Photo</figcaption>
 </figure>
-<hr />
-<p><em>23:21</em></p>
 <figure>
 <img src="images/photo_8@30-05-2025_23-21-03_3.jpg" alt="Photo" />
 <figcaption aria-hidden="true">Photo</figcaption>
 </figure>
-<hr />
-<p><em>23:21</em></p>
 <figure>
 <img src="images/photo_9@30-05-2025_23-21-03_3.jpg" alt="Photo" />
 <figcaption aria-hidden="true">Photo</figcaption>
