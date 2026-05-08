@@ -55,7 +55,7 @@ Welcome to my weblog. Here you'll find technical articles, project updates, and 
 - **08 июня 2025**: [Tetris C](blog/2025-06-08-Tetris_C/index.html) *(tags: avr, max7219, tetris_c)* — *21:16* Добрался наконец до работы с atmega под линукс на C Здесь, в принципе, все описано gcc-avr - компилятор avr-libc - имплементация стандартной библиотеки для AVR ) avrdude - тулза для заливки...
 - **01 июня 2025**: [Симуляция фильтров в EasyEDA](blog/2025-06-01-EasyEDA-Filters/index.html) *(tags: cad, electronics, simulation)* — Осваиваю симуляцию в EasyEDA на примере частотных фильтров
 - **30 мая 2025**: [Частотные фильтры](blog/2025-05-30-Frequency-Filters/index.html) *(tags: electronics, filters)* — Генерация постоянного напряжения из ШИМ сигнала с помощью частотного фильтра
-- **18 мая 2025**: [Tetris C](blog/2025-05-18-Tetris_C/index.html) *(tags: tetris_c)* — Tetris на C / sdl
+- **18 мая 2025**: [Tetris C](blog/2025-05-18-Tetris_C/index.html) *(tags: tetris_c)* — Tetris на C / sdl2
 
 <!-- BLOG_POSTS_END -->
 
