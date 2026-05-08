@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="author" content="Eugene" />
   <meta name="dcterms.date" content="2025-05-18" />
   <title>Tetris C</title>
   <style>
@@ -29,20 +28,41 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Tetris C</h1>
-<p class="author">Eugene</p>
 <p class="date">2025-05-18</p>
 </header>
-<p><em>01:16</em><br />
-<a
+<p><a
 href="https://github.com/bakineugene/tetris_c/commit/89d9af0feefaf62edd5d1db96ba02a0c22e30215">https://github.com/bakineugene/tetris_c/commit/89d9af0feefaf62edd5d1db96ba02a0c22e30215</a></p>
-<p>Цель - сделать несложную игрушку на микроконтроллере. В качестве
-первой “жертвы” выбрал “тетрис” Но чтобы проще было отлаживать решил для
-начала написать вариант для десктопа, а уже потом переписать отдельные
-части, чтобы выполнялось на микроконтроллере</p>
-<p>Вспоминаю С</p>
-<p>Текущая имплементация уже начинает напоминать тетрис, но пока без
-управления</p>
-<p>#tetris_c <a href="videos/video_1@18-05-2025_01-16-29_1.mp4">Video:
-videos/video_1@18-05-2025_01-16-29_1.mp4</a></p>
+<p>Цель - сделать несложную игрушку на микроконтроллере.<br />
+В качестве первой “жертвы” выбрал “тетрис”.<br />
+Но чтобы проще было отлаживать решил для начала написать вариант для
+десктопа, а уже потом переписать отдельные части, чтобы выполнялось на
+микроконтроллере.</p>
+<p>Вспоминаю С.</p>
+<p><a
+href="https://github.com/bakineugene/tetris_c/commit/32aaedda94ab2c851b88a176707eae4a5cd794a5">https://github.com/bakineugene/tetris_c/commit/32aaedda94ab2c851b88a176707eae4a5cd794a5</a><br />
+<a
+href="https://github.com/bakineugene/tetris_c/commit/49cac47be6dba49a0a13e76958bf09f49f627536">https://github.com/bakineugene/tetris_c/commit/49cac47be6dba49a0a13e76958bf09f49f627536</a></p>
+<p>Добавил управление элементами (кроме вращения) и исчезновение
+заполненных слоев</p>
+<p>Кроме того решил, что у меня будет 2 * 3 матрицы - то есть экран 16 *
+24</p>
+<h2 id="тетрамино">Тетрамино</h2>
+<p>Кстати, фигуры в тетрисе называются тетрамино (<a
+href="https://ru.wikipedia.org/wiki/Тетрамино">https://ru.wikipedia.org/wiki/Тетрамино</a>)
+Вот здесь есть summary по различным правилам вращения - <a
+href="https://strategywiki.org/wiki/Tetris/Rotation_systems">https://strategywiki.org/wiki/Tetris/Rotation_systems</a></p>
+<p><a
+href="https://github.com/bakineugene/tetris_c/commit/c684568582064311f1e900fc1ac5bf37d2d11750">https://github.com/bakineugene/tetris_c/commit/c684568582064311f1e900fc1ac5bf37d2d11750</a>
+Хоть это и только для отладки, не удержался и добавил цвета</p>
+<figure>
+<img src="images/photo_3@22-05-2025_23-07-38.jpg" alt="Photo" />
+<figcaption aria-hidden="true">Photo</figcaption>
+</figure>
+<h2 id="правила-вращения">Правила вращения</h2>
+<p><a
+href="https://github.com/bakineugene/tetris_c/commit/4dc5c9f18619cdcdc389fa246969430b0c6982c3">https://github.com/bakineugene/tetris_c/commit/4dc5c9f18619cdcdc389fa246969430b0c6982c3</a>
+<a
+href="https://github.com/bakineugene/tetris_c/commit/25eaeb3b80740c765d14d1866322c1fdc6851d5c">https://github.com/bakineugene/tetris_c/commit/25eaeb3b80740c765d14d1866322c1fdc6851d5c</a></p>
+<p>Имплементация вращения по правилам современного тетриса</p>
 </body>
 </html>

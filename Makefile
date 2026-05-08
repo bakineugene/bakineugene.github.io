@@ -22,12 +22,14 @@ all: $(CSS_DST) $(BLOG_INDEX_OUTPUT) $(OUT_HTML) media-copy
 
 # Generate blog index before building
 INSERT_SCRIPT := scripts/insert_blog_listing.py
-$(BLOG_INDEX_OUTPUT): $(BLOG_INDEX_TEMPLATE) $(GENERATOR_SCRIPT) $(INSERT_SCRIPT)
+$(BLOG_INDEX_OUTPUT): $(BLOG_INDEX_TEMPLATE) $(GENERATOR_SCRIPT) $(INSERT_SCRIPT) $(wildcard src/blog/*/index.md)
+	@echo "Generating blog index..."
 	@mkdir -p scripts
 	@mkdir -p $(BLOG_DIR)
 	python3 $(GENERATOR_SCRIPT) > $(BLOG_INDEX_OUTPUT).tmp
 	python3 $(INSERT_SCRIPT) $(BLOG_INDEX_TEMPLATE) $(BLOG_INDEX_OUTPUT).tmp $(BLOG_INDEX_OUTPUT)
 	@rm -f $(BLOG_INDEX_OUTPUT).tmp
+	@touch $(BLOG_INDEX_OUTPUT)  # Ensure timestamp is updated
 
 # Copy CSS once
 $(CSS_DST): $(CSS_SRC)
@@ -35,6 +37,10 @@ $(CSS_DST): $(CSS_SRC)
 	cp $(CSS_SRC) $(CSS_DST)
 
 # Convert markdown to HTML (depends on generated index)
+docs/index.html: src/index.md style.css md-to-html-links.lua
+	@mkdir -p $(dir $@)
+	pandoc $< -o $@ -s --css=$(CSS) --lua-filter=md-to-html-links.lua
+
 docs/%.html: src/%.md | $(CSS_DST)
 	@mkdir -p $(dir $@)
 	pandoc $< -o $@ -s --css=$(CSS) --lua-filter=md-to-html-links.lua

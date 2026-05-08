@@ -54,10 +54,9 @@ Welcome to my weblog. Here you'll find technical articles, project updates, and 
 - **12 июня 2025**: [Подключение max7219](blog/2025-06-12-max7219/index.html) *(tags: avr, max7219, tetris_c)* — Подключение max7219
 - **08 июня 2025**: [Tetris C](blog/2025-06-08-Tetris_C/index.html) *(tags: avr, max7219, tetris_c)* — *21:16* Добрался наконец до работы с atmega под линукс на C Здесь, в принципе, все описано gcc-avr - компилятор avr-libc - имплементация стандартной библиотеки для AVR ) avrdude - тулза для заливки...
 - **01 июня 2025**: [Симуляция фильтров в EasyEDA](blog/2025-06-01-EasyEDA-Filters/index.html) *(tags: cad, electronics, simulation)* — Осваиваю симуляцию в EasyEDA на примере частотных фильтров
-- **30 мая 2025**: [Частотные фильтры](blog/2025-05-30-Frequency-Filters/index.html) *(tags: electronics, filters)*
-- **27 мая 2025**: [Tetris C](blog/2025-05-27-Tetris_C/index.html) *(tags: tetris_c)* — *11:42* Имплементация вращения по правилам современного тетриса #tetris_c
-- **21 мая 2025**: [Tetris C](blog/2025-05-21-Tetris_C/index.html) *(tags: tetris_c)* — *23:22* Добавил управление элементами (кроме вращения) и исчезновение заполненных слоев Кроме того решил, что у меня будет 2*3 матрицы - то есть экран 16 * 24 Код, правда, уже нечитаемый, грядет чи...
-- **18 мая 2025**: [Tetris C](blog/2025-05-18-Tetris_C/index.html) *(tags: tetris_c)* — *01:16* Цель - сделать несложную игрушку на микроконтроллере. В качестве первой \"жертвы\" выбрал \"тет...\"
+- **30 мая 2025**: [Частотные фильтры](blog/2025-05-30-Frequency-Filters/index.html) *(tags: electronics, filters)* — Генерация постоянного напряжения из ШИМ сигнала с помощью частотного фильтра
+- **27 мая 2025**: [Tetris C](blog/2025-05-27-Tetris_C/index.html)
+- **18 мая 2025**: [Tetris C](blog/2025-05-18-Tetris_C/index.html) *(tags: tetris_c)* — Tetris на C / sdl
 
 <!-- BLOG_POSTS_END -->
 

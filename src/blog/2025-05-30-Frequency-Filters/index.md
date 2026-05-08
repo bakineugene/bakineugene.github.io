@@ -3,6 +3,7 @@ title: "Частотные фильтры"
 date: 2025-05-30
 author: Eugene
 tags: ['electronics', 'filters']
+summary: "Генерация постоянного напряжения из ШИМ сигнала с помощью частотного фильтра"
 ---
 
 [https://habr.com/ru/companies/selectel/articles/721558/](https://habr.com/ru/companies/selectel/articles/721558/)
