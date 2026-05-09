@@ -4,9 +4,8 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="author" content="Eugene" />
   <meta name="dcterms.date" content="2025-06-08" />
-  <title>Tetris C</title>
+  <title>AVR под Linux</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -92,17 +91,16 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Tetris C</h1>
-<p class="author">Eugene</p>
+<h1 class="title">AVR под Linux</h1>
 <p class="date">2025-06-08</p>
 </header>
-<p><em>21:16</em><br />
-Добрался наконец до работы с atmega под линукс на C</p>
+<p>Добрался наконец до работы с atmega под линукс на C</p>
 <p><a
 href="https://www.tonymitchell.ca/posts/setup-avr-toolchain-on-linux/">https://www.tonymitchell.ca/posts/setup-avr-toolchain-on-linux/</a></p>
-<p>Здесь, в принципе, все описано gcc-avr - компилятор avr-libc -
-имплементация стандартной библиотеки для AVR <a
-href="https://avr-libc.nongnu.org/user-manual/index.html">https://avr-libc.nongnu.org/user-manual/index.html</a>)
+<p>Здесь, в принципе, все описано<br />
+gcc-avr - компилятор<br />
+avr-libc - имплементация стандартной библиотеки для AVR <a
+href="https://avr-libc.nongnu.org/user-manual/index.html">https://avr-libc.nongnu.org/user-manual/index.html</a>)<br />
 avrdude - тулза для заливки в МК</p>
 <pre class="shell"><code>sudo apt install make gcc-avr avr-libc avrdude</code></pre>
 <p>Код “мигалки”</p>
@@ -127,56 +125,34 @@ avrdude - тулза для заливки в МК</p>
 avr-objcopy blink.elf -O ihex blink.hex
 avrdude -c usbasp -p m328p -U flash:w:&quot;blink.hex&quot;:a</code></pre>
 <p>Здесь -DF_CPU=тактовая частота в Гц,</p>
-<p>#tetris_c #avr</p>
-<hr />
-<p><em>22:05</em><br />
-Небольшой курс программирования под AVR. В основном на ассемблере <a
-href="https://easyelectronics.ru/category/avr-uchebnyj-kurs/page/5">https://easyelectronics.ru/category/avr-uchebnyj-kurs/page/5</a>
-А здесь дополнение о том как работать с AVR ассемблером под Линукс <a
-href="https://habr.com/ru/articles/373677/">https://habr.com/ru/articles/373677/</a></p>
-<p>Справочники по командам AVR <a
-href="https://pcbisolation.com/blog/atmel-coding-reference/">https://pcbisolation.com/blog/atmel-coding-reference/</a>
+<p>Справочники по AVR:<br />
 <a
-href="https://github.com/amirbawab/AVR-cheat-sheet">https://github.com/amirbawab/AVR-cheat-sheet</a>
+href="https://github.com/amirbawab/AVR-cheat-sheet">https://github.com/amirbawab/AVR-cheat-sheet</a><br />
 <a
-href="https://en.wikipedia.org/wiki/Atmel_AVR_instruction_set">https://en.wikipedia.org/wiki/Atmel_AVR_instruction_set</a>
+href="https://en.wikipedia.org/wiki/Atmel_AVR_instruction_set">https://en.wikipedia.org/wiki/Atmel_AVR_instruction_set</a><br />
 <a
 href="http://www.gaw.ru/html.cgi/txt/doc/micros/avr/asm/start.htm">http://www.gaw.ru/html.cgi/txt/doc/micros/avr/asm/start.htm</a></p>
-<p>Программирование AVR на C <a
-href="https://atmega32-avr.com/programming-the-microchip-atmega328p-in-c/">https://atmega32-avr.com/programming-the-microchip-atmega328p-in-c/</a>
+<p>Программирование AVR на C<br />
 <a
-href="https://narodstream.ru/programmirovanie-mk-avr/">https://narodstream.ru/programmirovanie-mk-avr/</a>
+href="https://narodstream.ru/programmirovanie-mk-avr/">https://narodstream.ru/programmirovanie-mk-avr/</a><br />
 <a
 href="https://ph0en1x.net/67-avr-microcontrollers-programming-in-linux-with-assembler-and-c.html">https://ph0en1x.net/67-avr-microcontrollers-programming-in-linux-with-assembler-and-c.html</a></p>
-<p>#tetris_c #avr</p>
-<hr />
-<p><em>22:05</em></p>
-<hr />
-<p><em>22:05</em></p>
-<hr />
-<p><em>10:02</em><br />
-Еще пачка ссылок. Теперь по работе с LED матрицами под управлением
-MAX7219</p>
-<p>Про max7219, но не про матрицы, а про 7 сегментные индикаторы <a
-href="https://narodstream.ru/avr-urok-28-spi-drajver-led-max7219/">https://narodstream.ru/avr-urok-28-spi-drajver-led-max7219/</a>
+<p>Ссылки по работе с LED матрицами под управлением MAX7219:</p>
+<p>Про max7219, но не про матрицы, а про 7 сегментные индикаторы<br />
 <a
-href="https://gist.github.com/adnbr/2352797">https://gist.github.com/adnbr/2352797</a>
+href="https://narodstream.ru/avr-urok-28-spi-drajver-led-max7219/">https://narodstream.ru/avr-urok-28-spi-drajver-led-max7219/</a><br />
 <a
-href="https://dzen.ru/a/XydXNDaFGS4R-8n-">https://dzen.ru/a/XydXNDaFGS4R-8n-</a>
-<a href="http://avr-start.ru/?p=3788">http://avr-start.ru/?p=3788</a> <a
-href="https://we.easyelectronics.ru/Theory/srednechastotnyy-chastotomer-na-avr-chast-2-staticheskaya-indikaciya.html">https://we.easyelectronics.ru/Theory/srednechastotnyy-chastotomer-na-avr-chast-2-staticheskaya-indikaciya.html</a></p>
-<p>Тут уже про матрицы <a
-href="https://embeddedthoughts.com/2016/04/19/scrolling-text-on-the-8x8-led-matrix-with-max7219-drivers/">https://embeddedthoughts.com/2016/04/19/scrolling-text-on-the-8x8-led-matrix-with-max7219-drivers/</a>
+href="https://gist.github.com/adnbr/2352797">https://gist.github.com/adnbr/2352797</a><br />
 <a
-href="https://tinusaur.com/tutorials/max7219-attiny85-interface/">https://tinusaur.com/tutorials/max7219-attiny85-interface/</a>
+href="https://dzen.ru/a/XydXNDaFGS4R-8n-">https://dzen.ru/a/XydXNDaFGS4R-8n-</a><br />
 <a
-href="https://www.avrfreaks.net/s/topic/a5C3l000000UV5JEAW/t133283">https://www.avrfreaks.net/s/topic/a5C3l000000UV5JEAW/t133283</a>
+href="http://avr-start.ru/?p=3788">http://avr-start.ru/?p=3788</a></p>
+<p>Тут уже про матрицы:<br />
 <a
-href="https://habr.com/ru/articles/846656/">https://habr.com/ru/articles/846656/</a>
-- Про написание библиотеки для MAX7219, работающей с любым МК</p>
-<p>Edit - Отсеянное: <a
-href="http://1io.ru/articles/microcontroller/avr_max7219/">http://1io.ru/articles/microcontroller/avr_max7219/</a>
-- непонятно, что за библиотека используется</p>
-<p>#tetris_c #avr #max7219</p>
+href="https://embeddedthoughts.com/2016/04/19/scrolling-text-on-the-8x8-led-matrix-with-max7219-drivers/">https://embeddedthoughts.com/2016/04/19/scrolling-text-on-the-8x8-led-matrix-with-max7219-drivers/</a></p>
+<p>На самом деле основным и лучшим источником информации при работе с МК
+AVR является официальная документация.<br />
+Просто не сразу понимаешь как ее читать, но после определенного момента
+полностью пересел на нее.</p>
 </body>
 </html>

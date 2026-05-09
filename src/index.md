@@ -52,7 +52,7 @@ Welcome to my weblog. Here you'll find technical articles, project updates, and 
 - **27 июня 2025**: [Tetris C](blog/2025-06-27-Tetris_C/index.html) *(tags: tetris_c)* — *10:50* Добавил джойстик 🎮 Джойстик коннектится к аналоговому входу, каждая кнопка активирует делитель напряжения. #tetris_c )
 - **22 июня 2025**: [Tetris C](blog/2025-06-22-Tetris_C/index.html) *(tags: avr, tetris_c)* — *17:19* Очень грязный код и очень коряво я собрал экран, но похоже скоро соберется что-то играбельное #tetris_c #avr
 - **12 июня 2025**: [Подключение max7219](blog/2025-06-12-max7219/index.html) *(tags: avr, max7219, tetris_c)* — Подключение max7219
-- **08 июня 2025**: [Tetris C](blog/2025-06-08-Tetris_C/index.html) *(tags: avr, max7219, tetris_c)* — *21:16* Добрался наконец до работы с atmega под линукс на C Здесь, в принципе, все описано gcc-avr - компилятор avr-libc - имплементация стандартной библиотеки для AVR ) avrdude - тулза для заливки...
+- **08 июня 2025**: [AVR под Linux](blog/2025-06-08-Tetris_C/index.html) *(tags: avr, max7219)* — Общая информация и коллекция ссылок по работе с AVR и MAX7219 под линуксом
 - **01 июня 2025**: [Симуляция фильтров в EasyEDA](blog/2025-06-01-EasyEDA-Filters/index.html) *(tags: cad, electronics, simulation)* — Осваиваю симуляцию в EasyEDA на примере частотных фильтров
 - **30 мая 2025**: [Частотные фильтры](blog/2025-05-30-Frequency-Filters/index.html) *(tags: electronics, filters)* — Генерация постоянного напряжения из ШИМ сигнала с помощью частотного фильтра
 - **18 мая 2025**: [Tetris C](blog/2025-05-18-Tetris_C/index.html) *(tags: tetris_c)* — Tetris на C / sdl2
