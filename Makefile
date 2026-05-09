@@ -11,6 +11,18 @@ CSS_DST := docs/style.css
 
 CSS := /style.css
 
+# Site root URL for absolute navigation links
+# Can be overridden via environment variable: SITE_ROOT_URL=https://bakineugene.github.io/
+# Default is empty, which will use the default in add-navigation.lua
+SITE_ROOT_URL ?=
+
+# Build Pandoc variable argument if SITE_ROOT_URL is set
+ifneq ($(SITE_ROOT_URL),)
+  PANDOC_SITE_ROOT_VAR = --variable site-root-url=$(SITE_ROOT_URL)
+else
+  PANDOC_SITE_ROOT_VAR =
+endif
+
 # Blog-related variables
 BLOG_DIR := src/blog
 BLOG_INDEX_TEMPLATE := src/index.template.md
@@ -39,11 +51,11 @@ $(CSS_DST): $(CSS_SRC)
 # Convert markdown to HTML (depends on generated index)
 docs/index.html: src/index.md style.css md-to-html-links.lua
 	@mkdir -p $(dir $@)
-	pandoc $< -o $@ -s --css=$(CSS) --lua-filter=md-to-html-links.lua
+	pandoc $< -o $@ -s --css=$(CSS) --lua-filter=md-to-html-links.lua --lua-filter=add-navigation.lua $(PANDOC_SITE_ROOT_VAR)
 
 docs/%.html: src/%.md | $(CSS_DST)
 	@mkdir -p $(dir $@)
-	pandoc $< -o $@ -s --css=$(CSS) --lua-filter=md-to-html-links.lua
+	pandoc $< -o $@ -s --css=$(CSS) --lua-filter=md-to-html-links.lua --lua-filter=add-navigation.lua $(PANDOC_SITE_ROOT_VAR)
 
 # Copy media files (images, videos, audio, etc.) preserving directory structure
 media-copy:
