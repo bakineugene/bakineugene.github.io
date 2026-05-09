@@ -1,7 +1,7 @@
 -- Lua filter to add "На главную" navigation links to blog posts
 -- Detects blog posts by checking for YAML frontmatter metadata (title, date, tags, summary)
--- Adds navigation divs before title (via include-before) and at end of content
--- Uses absolute paths with configurable root URL via metadata site-root-url or SITE_ROOT_URL env var
+-- Adds navigation divs at beginning and end of content
+-- Uses absolute paths with configurable root URL via site-root-url variable or SITE_ROOT_URL env var
 
 function Pandoc(doc)
   -- Check if this is a blog post by looking for typical blog post metadata
@@ -20,11 +20,10 @@ function Pandoc(doc)
   end
   
   -- Determine the root URL for absolute links
-  -- Priority: 1. Metadata site-root-url (passed via --metadata), 2. Environment variable SITE_ROOT_URL, 3. Default
+  -- Priority: 1. Pandoc variable site-root-url, 2. Environment variable SITE_ROOT_URL, 3. Default
   local root_url = "https://bakineugene.github.io/"
   
-  -- Check Pandoc metadata (passed via --metadata site-root-url=...)
-  -- Note: --variable does NOT populate doc.meta; use --metadata instead
+  -- Check Pandoc metadata (passed via --variable site-root-url=...)
   if doc.meta["site-root-url"] then
     root_url = pandoc.utils.stringify(doc.meta["site-root-url"])
   else
@@ -46,16 +45,10 @@ function Pandoc(doc)
   local div = pandoc.Div({para})
   div.classes = {"nav-home"}
   
-  -- Add navigation before title via include-before metadata
-  -- This ensures navigation appears before the title block in standalone output
-  if doc.meta["include-before"] then
-    -- already exists, append our div
-    table.insert(doc.meta["include-before"], div)
-  else
-    doc.meta["include-before"] = pandoc.MetaBlocks({div})
-  end
+  -- Insert navigation div at the beginning of document blocks (position 1)
+  table.insert(doc.blocks, 1, div)
   
-  -- Insert navigation div at the end of document blocks
+  -- Insert navigation div at the end
   table.insert(doc.blocks, div)
   return doc
 end
