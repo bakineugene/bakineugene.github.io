@@ -5,8 +5,8 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Eugene" />
-  <meta name="dcterms.date" content="2025-07-08" />
-  <title>Sound</title>
+  <meta name="dcterms.date" content="2025-07-02" />
+  <title>AVR Sound</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -95,39 +95,89 @@
 <p><a href="https://bakineugene.github.io/">На главную</a></p>
 </div>
 <header id="title-block-header">
-<h1 class="title">Sound</h1>
+<h1 class="title">AVR Sound</h1>
 <p class="author">Eugene</p>
-<p class="date">2025-07-08</p>
+<p class="date">2025-07-02</p>
 </header>
-<p><em>11:49</em> #sound #avr</p>
-<p>Генерация звука на avr</p>
-<p>На пьезодинамике, конечно, голос совсем не слышно. Но звяк от кружки
-слышно неплохо <a href="videos/video_7@08-07-2025_11-49-43.mp4">Video:
-videos/video_7@08-07-2025_11-49-43.mp4</a></p>
+<p>Нашел у себя два излучателя. Пьезоизлучатель и
+электромагнитный.<br />
+Первый звучит погромче. Но вообще от 5 вольт оба слабовато работают.
+Нужно по крайней мере 10 для хорошей громкости.</p>
+<p>Я попробовал оба излучателя уже при работе с МК и теперь мне кажется,
+что громче звучит HC12G.</p>
+<p>Музычка <a
+href="https://radioparty.ru/programming/avr/c/284-lesson12-music">отсюда</a><br />
+Но нужно будет чтобы звуки производились “в фоне”<br />
+Также сначала я заметил, что HC12G жрет 0.1А даже когда не звучит.
+Оказалось, что код оставляет пин в состоянии логической 1 при отсутствии
+музыки<br />
+Нужно добавить сброс пина в 0 при окончании проигрывания ноты</p>
+<p>Сейчас мне уже кажется, что громкости достаточно</p>
+<p><a href="videos/video_5@03-07-2025_11-46-59.mp4">Video:
+videos/video_5@03-07-2025_11-46-59.mp4</a></p>
+<p><a href="videos/video_6@03-07-2025_11-47-00.mp4">Video:
+videos/video_6@03-07-2025_11-47-00.mp4</a></p>
+<p>Первая идея - записать звуки в формате WAV и каким-то образом
+сконвертировать их в понятный для МК формат.</p>
+<p>Записал несколько звуков - удар пальцем по столу, ложкой по кружке и
+голос</p>
+<p>Форматы хранения музыки без сжатия “разбивают” аналоговую звуковую
+волну на “семплы”.<br />
+Каждый “семпл” описывает состояние звуковой волны в определенный момент
+времени.<br />
+Есть два параметра, которые позволяют играться с качеством записанного
+звука.</p>
+<p>1 - кол-во семплов в секунду.<br />
+8000 семплов достаточно для передачи голоса с потерей тембра.<br />
+44100 семплов достаточно чтобы воспроизвести звук неотличимо для
+человеческого уха (* 2 от максимальной частоты которую человек может
+услышать)</p>
+<p>Например удар ложечкой по чашке после пересемплирования потерял
+тоненькое “дзинь” и превратился почти в удар клюшкой по шайбе.</p>
+<p>2 - размер семпла.<br />
+Определяет точность каждого семпла. Дефолт при записи - 32 бита.</p>
+<p><a
+href="https://github.com/bakineugene/sounds_experiments_avr/tree/main/sounds">Здесь</a>
+звуки 8 бит, 8000 семплов в секунду<br />
+Записаны на телефон, преобразованы в <a
+href="https://www.audacityteam.org/">Audacity</a></p>
+<p>Не без помощи ИИ написал конвертер из WAV в “сишный” массив
+uint8.<br />
+Но сходу генерация звука на МК у меня не заладилась - поэтому я решил
+проверить, то ли я вообще нагенерировал.<br />
+В sdl2 есть инструменты для проигрывания в том числе такого формата
+звуков (<a
+href="https://blog.fredrb.com/2023/08/08/audio-programming-note-sdl/">тык1</a>,
+<a
+href="https://gigi.nullneuron.net/gigilabs/playing-a-wav-file-using-sdl2/">тык2</a>)</p>
+<p>В итоге получилось преобразовать чиселки <a
+href="https://github.com/bakineugene/sounds_experiments_avr/commit/b072e9f29b453c37d3b3941ac5fd15e485bd098a">обратно
+в звук</a></p>
 <hr />
-<p><em>11:49</em></p>
+<p>На пьезодинамике, конечно, голос совсем не слышно. Но звяк от кружки
+слышно неплохо<br />
+<a href="videos/video_7@08-07-2025_11-49-43.mp4">Video:
+videos/video_7@08-07-2025_11-49-43.mp4</a></p>
 <p><a href="videos/video_8@08-07-2025_11-49-43.mp4">Video:
 videos/video_8@08-07-2025_11-49-43.mp4</a></p>
-<hr />
-<p><em>11:52</em><br />
-#sound #avr</p>
-<p>Как это работает</p>
+<p>Как это работает:</p>
 <p><a
-href="https://github.com/bakineugene/sounds_experiments_avr/blob/1d22a4c5126b14fa07055e3f41fd8013c0f2669d/avr_main.c">https://github.com/bakineugene/sounds_experiments_avr/blob/1d22a4c5126b14fa07055e3f41fd8013c0f2669d/avr_main.c</a></p>
+href="https://github.com/bakineugene/sounds_experiments_avr/blob/1d22a4c5126b14fa07055e3f41fd8013c0f2669d/avr_main.c">avr_main.c</a></p>
 <p>Задейстовано два таймера (из 3 доступных)</p>
-<pre><code>● Peripheral features:
-● Two 8-bit Timer/Counters with separate prescaler and compare mode
-● One 16-bit Timer/Counter with separate prescaler, compare mode, and capture mode</code></pre>
+<pre><code>* Peripheral features:
+* Two 8-bit Timer/Counters with separate prescaler and compare mode
+* One 16-bit Timer/Counter with separate prescaler, compare mode, and capture mode</code></pre>
 <div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> setupTimer1_PWM<span class="op">()</span> <span class="op">{</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    DDRB <span class="op">|=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> PB1<span class="op">);</span>       <span class="co">// PB1 (OC1A) как выход</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    TCCR1A <span class="op">=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> COM1A1<span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> WGM11<span class="op">);</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    TCCR1B <span class="op">=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> WGM13<span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> WGM12<span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> CS10<span class="op">);</span>  <span class="co">// Fast PWM, режим 14</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ICR1 <span class="op">=</span> PWM_TOP<span class="op">;</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>Таймер_1 - высокоточный, 16 битный. Он используется в данном случае
-для генерации ШИМ сигнала определенной частоты. Преобразование ШИМ
-сигнала в звук происходит, судя по всему за счет того, что излучатель и
-сам своего рода ФНЧ.</p>
+<p><code>Таймер_1</code> - высокоточный, 16 битный.<br />
+Он используется в данном случае для генерации ШИМ сигнала определенной
+частоты.<br />
+Преобразование ШИМ сигнала в звук происходит, судя по всему за счет
+того, что излучатель и сам своего рода ФНЧ.</p>
 <p>Таймер работает в режиме fast pwm (задается битами WGM11, WGM12,
 WGM13) - т.е. при достижении счетчиком необходимого значения на выводе
 ОС1A выставляется 1. А при переполнении счетчика высталяется 0. Таким
@@ -140,11 +190,11 @@ WGM13) - т.е. при достижении счетчиком необходи�
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    OCR0A <span class="op">=</span> <span class="op">(</span>F_CPU <span class="op">/</span> <span class="dv">8</span> <span class="op">/</span> SAMPLE_RATE<span class="op">)</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    TIMSK0 <span class="op">=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> OCIE0A<span class="op">);</span>  <span class="co">// Разрешить прерывание</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>Второй таймер (timer_0) работает в другом режиме - после достижения
-значения OCR0A счетчик сбрасывается в 0 и активируется прерывание.
-Значение OCR0A выставляется равным длине семпла. Таким образом в каждом
-обработчике прерывания мы переключаем семпл - т.е. меняем коэффициент
-заполнения для первого таймера.</p>
+<p>Второй таймер (<code>timer_0</code>) работает в другом режиме - после
+достижения значения OCR0A счетчик сбрасывается в 0 и активируется
+прерывание. Значение OCR0A выставляется равным длине семпла. Таким
+образом в каждом обработчике прерывания мы переключаем семпл - т.е.
+меняем коэффициент заполнения для первого таймера.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ISR<span class="op">(</span>TIMER0_COMPA_vect<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>queue_head <span class="op">!=</span> queue_end<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        Sound current_sound <span class="op">=</span> queue<span class="op">[</span>queue_head<span class="op">];</span></span>
